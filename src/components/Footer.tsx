@@ -1,0 +1,170 @@
+import React from 'react';
+import { Shield, Cpu } from 'lucide-react';
+import { sounds } from '../utils/soundEffects';
+
+interface FooterProps {
+  onRebootBootScreen?: () => void;
+}
+
+export const Footer: React.FC<FooterProps> = ({ onRebootBootScreen }) => {
+  const handleLinkClick = (href: string) => {
+    sounds.playBlip();
+    const el = document.querySelector(href);
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  return (
+    <footer className="bg-slate-50 border-t border-slate-200 pt-12 pb-8 relative overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        
+        {/* Main Footer Row */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 pb-12 border-b border-slate-200">
+          
+          {/* Brand Info */}
+          <div className="md:col-span-5 flex flex-col items-start">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="relative flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-200 p-2 shadow-xs">
+                <Shield className="w-5 h-5 text-blue-600" />
+                <Cpu className="w-2.5 h-2.5 text-indigo-600 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
+              </div>
+              <span className="font-display font-bold text-xl tracking-tight text-slate-900">
+                DeepGuard <span className="text-blue-600">AI</span>
+              </span>
+            </div>
+
+            <p className="text-slate-600 text-sm max-w-sm mb-6 leading-relaxed">
+              AI-powered media authenticity analysis. Advancing digital forensics, biometric verification, 
+              and generative media defense for an honest digital future.
+            </p>
+
+            <div className="flex flex-wrap items-center gap-3">
+              <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-xs font-mono font-semibold text-emerald-700 shadow-xs">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                <span>GLOBAL FORENSIC MESH OPERATIONAL</span>
+              </div>
+
+              {onRebootBootScreen && (
+                <button
+                  onClick={() => {
+                    sounds.playBlip();
+                    onRebootBootScreen();
+                  }}
+                  className="px-3 py-1.5 rounded-full bg-white hover:bg-blue-50 border border-slate-200 text-xs font-mono text-slate-600 hover:text-blue-600 transition-colors shadow-2xs flex items-center gap-1.5"
+                >
+                  <Cpu className="w-3 h-3 text-blue-600" />
+                  <span>Re-test Boot Screen</span>
+                </button>
+              )}
+            </div>
+          </div>
+
+          {/* Links Columns */}
+          <div className="md:col-span-7 grid grid-cols-2 sm:grid-cols-3 gap-8">
+            
+            {/* Column 1: System */}
+            <div>
+              <h4 className="font-mono text-xs font-bold text-slate-900 uppercase tracking-wider mb-4">
+                Architecture
+              </h4>
+              <ul className="space-y-2.5 text-xs font-mono text-slate-600">
+                <li>
+                  <button onClick={() => handleLinkClick('#hero')} className="hover:text-blue-600 transition-colors">
+                    Product Core
+                  </button>
+                </li>
+                <li>
+                  <button onClick={() => handleLinkClick('#how-it-works')} className="hover:text-blue-600 transition-colors">
+                    How It Works
+                  </button>
+                </li>
+                <li>
+                  <button onClick={() => handleLinkClick('#technology')} className="hover:text-blue-600 transition-colors">
+                    Technology & Models
+                  </button>
+                </li>
+                <li>
+                  <button onClick={() => handleLinkClick('#scanner')} className="hover:text-blue-600 transition-colors">
+                    Media Scanner
+                  </button>
+                </li>
+              </ul>
+            </div>
+
+            {/* Column 2: Solutions */}
+            <div>
+              <h4 className="font-mono text-xs font-bold text-slate-900 uppercase tracking-wider mb-4">
+                Solutions
+              </h4>
+              <ul className="space-y-2.5 text-xs font-mono text-slate-600">
+                <li>
+                  <button onClick={() => handleLinkClick('#applications')} className="hover:text-blue-600 transition-colors">
+                    Applications
+                  </button>
+                </li>
+                <li>
+                  <button onClick={() => handleLinkClick('#dashboard')} className="hover:text-blue-600 transition-colors">
+                    Cyber Dashboard
+                  </button>
+                </li>
+                <li>
+                  <button onClick={() => handleLinkClick('#security')} className="hover:text-blue-600 transition-colors">
+                    Security & Trust
+                  </button>
+                </li>
+                <li>
+                  <button onClick={() => handleLinkClick('#roadmap')} className="hover:text-blue-600 transition-colors">
+                    Future Roadmap
+                  </button>
+                </li>
+              </ul>
+            </div>
+
+            {/* Column 3: Trust & Compliance */}
+            <div>
+              <h4 className="font-mono text-xs font-bold text-slate-900 uppercase tracking-wider mb-4">
+                Compliance
+              </h4>
+              <ul className="space-y-2.5 text-xs font-mono text-slate-600">
+                <li>
+                  <a href="#security" className="hover:text-blue-600 transition-colors">
+                    Privacy Policy
+                  </a>
+                </li>
+                <li>
+                  <a href="#security" className="hover:text-blue-600 transition-colors">
+                    Zero-Retention Policy
+                  </a>
+                </li>
+                <li>
+                  <a href="#report" className="hover:text-blue-600 transition-colors">
+                    Explainable AI
+                  </a>
+                </li>
+                <li>
+                  <a href="mailto:forensics@deepguard.ai" className="hover:text-blue-600 transition-colors">
+                    Contact Forensics
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+          </div>
+
+        </div>
+
+        {/* Bottom Disclaimer & Copyright */}
+        <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs font-mono text-slate-500">
+          <div>
+            &copy; 2026 DeepGuard AI. All rights reserved. Built for digital forensics & synthetic defense.
+          </div>
+
+          <div className="text-center md:text-right max-w-md text-[11px] text-slate-500">
+            <span className="font-semibold text-slate-600">Disclaimer: </span>
+            Detection results are AI-assisted assessments and should be reviewed in context for high-stakes decisions.
+          </div>
+        </div>
+
+      </div>
+    </footer>
+  );
+};
