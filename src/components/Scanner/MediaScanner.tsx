@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { SAMPLE_MEDIA, PROCESSING_MODULES } from '../../data/mockData';
 import type { MediaSample } from '../../types';
 import { analyzeMediaFile } from '../../utils/forensicAnalyzer';
+import { saveScanToDb } from '../../services/api';
 import { TerminalLog } from './TerminalLog';
 import { SignalMonitor } from './SignalMonitor';
 import {
@@ -218,6 +219,22 @@ export const MediaScanner: React.FC<MediaScannerProps> = ({
 
         sounds.playComplete();
         onScanComplete(sample);
+
+        // Asynchronously persist completed scan into MongoDB database
+        saveScanToDb({
+          filename: sample.filename,
+          fileType: sample.type,
+          result: sample.result,
+          confidence: sample.confidence,
+          riskLevel: sample.riskLevel,
+          orientation: mediaOrientation === 'portrait' ? 'PORTRAIT' : mediaOrientation === 'square' ? 'SQUARE' : 'LANDSCAPE',
+          aspectRatioLabel: mediaDimensions ? `${mediaDimensions.width}:${mediaDimensions.height}` : (sample.type === 'image' ? '4:3' : '16:9'),
+          mediaUrl: sample.previewUrl,
+          signals: sample.signals,
+          metrics: sample.metrics,
+          detectedAnomalies: sample.detectedAnomalies,
+          logs: sample.logs,
+        }).catch((err) => console.warn('Background MongoDB sync note:', err));
       }
     }, 70);
 

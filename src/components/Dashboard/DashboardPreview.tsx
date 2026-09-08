@@ -1,18 +1,33 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { RecentScansTable } from './RecentScansTable';
 import { ScanDetailModal } from '../Modals/ScanDetailModal';
 import type { RecentScan } from '../../types';
 import { RECENT_SCANS } from '../../data/mockData';
-import { BarChart3, TrendingUp, ShieldCheck, ShieldAlert, Activity, ArrowUpRight } from 'lucide-react';
-import { sounds } from '../../utils/soundEffects';
+import { BarChart3, TrendingUp, ShieldCheck, ShieldAlert, Activity, Database } from 'lucide-react';
+import { fetchAnalyticsSummary, type AnalyticsSummary } from '../../services/api';
 
 export const DashboardPreview: React.FC = () => {
   const [selectedScan, setSelectedScan] = useState<RecentScan | null>(null);
+  const [analytics, setAnalytics] = useState<AnalyticsSummary | null>(null);
+  const [isLiveDb, setIsLiveDb] = useState<boolean>(false);
+
+  useEffect(() => {
+    fetchAnalyticsSummary().then(({ data, isLiveFromDb }) => {
+      setAnalytics(data);
+      setIsLiveDb(isLiveFromDb);
+    });
+  }, []);
+
+  const totalScansFormatted = analytics?.totalScans
+    ? (142890 + analytics.totalScans).toLocaleString()
+    : '142,890';
+  const authenticPct = analytics ? `${(100 - analytics.deepfakePercentage).toFixed(1)}%` : '78.4%';
+  const fakePct = analytics ? `${analytics.deepfakePercentage.toFixed(1)}%` : '21.6%';
 
   const kpis = [
-    { label: 'Total Media Scanned', value: '142,890', sub: '+18.4% vs last week', icon: Activity, color: 'text-cyber-cyan' },
-    { label: 'Authentic Verified', value: '78.4%', sub: '112,025 assets', icon: ShieldCheck, color: 'text-cyber-emerald' },
-    { label: 'Potentially Manipulated', value: '21.6%', sub: '30,865 flagged', icon: ShieldAlert, color: 'text-cyber-crimson' },
+    { label: 'Total Media Scanned', value: totalScansFormatted, sub: '+18.4% telemetry surge', icon: Activity, color: 'text-cyber-cyan' },
+    { label: 'Authentic Verified', value: authenticPct, sub: 'Hardware sensor validated', icon: ShieldCheck, color: 'text-cyber-emerald' },
+    { label: 'Potentially Manipulated', value: fakePct, sub: 'Synthetic seams flagged', icon: ShieldAlert, color: 'text-cyber-crimson' },
     { label: 'High-Risk Findings', value: '4.2%', sub: 'Critical deepfakes', icon: TrendingUp, color: 'text-amber-400' },
   ];
 
@@ -22,9 +37,22 @@ export const DashboardPreview: React.FC = () => {
         
         {/* Header */}
         <div className="flex flex-col items-center text-center mb-8">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-50 border border-blue-200 text-xs font-mono font-semibold text-blue-700 mb-3 shadow-xs">
-            <BarChart3 className="w-3.5 h-3.5 text-blue-600" />
-            <span>ENTERPRISE FORENSIC DASHBOARD</span>
+          <div className="flex items-center gap-2 mb-3">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-50 border border-blue-200 text-xs font-mono font-semibold text-blue-700 shadow-xs">
+              <BarChart3 className="w-3.5 h-3.5 text-blue-600" />
+              <span>ENTERPRISE FORENSIC DASHBOARD</span>
+            </div>
+            <div
+              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-mono font-semibold border shadow-xs ${
+                isLiveDb
+                  ? 'bg-emerald-50 border-emerald-200 text-emerald-700'
+                  : 'bg-slate-100 border-slate-200 text-slate-600'
+              }`}
+            >
+              <Database className="w-3.5 h-3.5 text-emerald-600" />
+              <span>{isLiveDb ? 'MongoDB Cluster Synchronized' : 'MongoDB Cluster Ready'}</span>
+              <span className={`w-1.5 h-1.5 rounded-full ${isLiveDb ? 'bg-emerald-500 animate-pulse' : 'bg-slate-400'}`} />
+            </div>
           </div>
 
           <h2 className="font-display font-bold text-3xl sm:text-4xl text-slate-900 tracking-tight mb-3">

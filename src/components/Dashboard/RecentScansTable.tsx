@@ -1,8 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { RECENT_SCANS } from '../../data/mockData';
 import type { RecentScan } from '../../types';
-import { FileVideo, Image as ImageIcon, ShieldCheck, ShieldAlert, AlertTriangle, Eye, ArrowUpRight } from 'lucide-react';
+import {
+  FileVideo,
+  Image as ImageIcon,
+  ShieldCheck,
+  ShieldAlert,
+  AlertTriangle,
+  ArrowUpRight,
+  Database,
+  RefreshCw,
+} from 'lucide-react';
 import { sounds } from '../../utils/soundEffects';
+import { fetchRecentScans } from '../../services/api';
 
 interface RecentScansTableProps {
   onSelectScan: (scan: RecentScan) => void;
@@ -10,12 +20,26 @@ interface RecentScansTableProps {
 
 export const RecentScansTable: React.FC<RecentScansTableProps> = ({ onSelectScan }) => {
   const [filter, setFilter] = useState<'all' | 'human' | 'deepfake'>('all');
+  const [scans, setScans] = useState<RecentScan[]>(RECENT_SCANS);
+  const [isLiveFromDb, setIsLiveFromDb] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const filteredScans = RECENT_SCANS.filter((scan) => {
-    if (filter === 'human') return scan.result === 'REAL HUMAN (AUTHENTIC)';
-    if (filter === 'deepfake') return scan.result === 'DEEPFAKE (FAKE)';
-    return true;
-  });
+  const loadScans = async () => {
+    setIsLoading(true);
+    try {
+      const { scans: data, isLiveFromDb: live } = await fetchRecentScans(filter);
+      setScans(data);
+      setIsLiveFromDb(live);
+    } catch {
+      setIsLiveFromDb(false);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadScans();
+  }, [filter]);
 
   const handleRowClick = (scan: RecentScan) => {
     sounds.playBlip();
@@ -26,36 +50,64 @@ export const RecentScansTable: React.FC<RecentScansTableProps> = ({ onSelectScan
     <div className="rounded-2xl bg-white border border-slate-200 overflow-hidden shadow-sm">
       {/* Header Bar */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 sm:p-5 border-b border-slate-100">
-        <div>
-          <h3 className="font-display font-bold text-base text-slate-900">Recent Media Scans</h3>
-          <p className="text-xs text-slate-500 font-mono">Live enterprise audit stream</p>
+        <div className="flex items-center gap-3">
+          <div>
+            <div className="flex items-center gap-2">
+              <h3 className="font-display font-bold text-base text-slate-900">Recent Media Scans</h3>
+              {/* Database Live Status Badge */}
+              <div
+                className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-mono font-semibold border ${
+                  isLiveFromDb
+                    ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
+                    : 'bg-amber-50 text-amber-700 border-amber-200'
+                }`}
+                title={isLiveFromDb ? 'Directly connected to MongoDB cluster' : 'Local fallback cache active'}
+              >
+                <Database className="w-3 h-3" />
+                <span>{isLiveFromDb ? 'MongoDB Live' : 'Local Cache'}</span>
+                <span className={`w-1.5 h-1.5 rounded-full ${isLiveFromDb ? 'bg-emerald-500 animate-pulse' : 'bg-amber-400'}`} />
+              </div>
+            </div>
+            <p className="text-xs text-slate-500 font-mono">Real-time forensic verification ledger</p>
+          </div>
         </div>
 
-        {/* Filter Pills */}
-        <div className="flex items-center gap-1.5 p-1 rounded-xl bg-slate-100 border border-slate-200 text-xs font-mono">
+        {/* Filter Pills & Sync Button */}
+        <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5 p-1 rounded-xl bg-slate-100 border border-slate-200 text-xs font-mono">
+            <button
+              onClick={() => setFilter('all')}
+              className={`px-3 py-1.5 rounded-lg transition-colors ${
+                filter === 'all' ? 'bg-blue-600 text-white font-bold shadow-xs' : 'text-slate-600 hover:text-slate-900 font-medium'
+              }`}
+            >
+              All ({scans.length})
+            </button>
+            <button
+              onClick={() => setFilter('human')}
+              className={`px-3 py-1.5 rounded-lg transition-colors ${
+                filter === 'human' ? 'bg-emerald-600 text-white font-bold shadow-xs' : 'text-slate-600 hover:text-slate-900 font-medium'
+              }`}
+            >
+              Real Human
+            </button>
+            <button
+              onClick={() => setFilter('deepfake')}
+              className={`px-3 py-1.5 rounded-lg transition-colors ${
+                filter === 'deepfake' ? 'bg-rose-600 text-white font-bold shadow-xs' : 'text-slate-600 hover:text-slate-900 font-medium'
+              }`}
+            >
+              Deepfake (Fake)
+            </button>
+          </div>
+
           <button
-            onClick={() => setFilter('all')}
-            className={`px-3 py-1.5 rounded-lg transition-colors ${
-              filter === 'all' ? 'bg-blue-600 text-white font-bold shadow-xs' : 'text-slate-600 hover:text-slate-900 font-medium'
-            }`}
+            onClick={loadScans}
+            disabled={isLoading}
+            className="p-2 rounded-xl bg-slate-100 border border-slate-200 text-slate-600 hover:text-blue-600 hover:bg-blue-50 transition-colors shadow-2xs"
+            title="Sync with MongoDB"
           >
-            All ({RECENT_SCANS.length})
-          </button>
-          <button
-            onClick={() => setFilter('human')}
-            className={`px-3 py-1.5 rounded-lg transition-colors ${
-              filter === 'human' ? 'bg-emerald-600 text-white font-bold shadow-xs' : 'text-slate-600 hover:text-slate-900 font-medium'
-            }`}
-          >
-            Real Human
-          </button>
-          <button
-            onClick={() => setFilter('deepfake')}
-            className={`px-3 py-1.5 rounded-lg transition-colors ${
-              filter === 'deepfake' ? 'bg-rose-600 text-white font-bold shadow-xs' : 'text-slate-600 hover:text-slate-900 font-medium'
-            }`}
-          >
-            Deepfake (Fake)
+            <RefreshCw className={`w-4 h-4 ${isLoading ? 'animate-spin text-blue-600' : ''}`} />
           </button>
         </div>
       </div>
@@ -74,10 +126,10 @@ export const RecentScansTable: React.FC<RecentScansTableProps> = ({ onSelectScan
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100">
-            {filteredScans.map((scan) => {
+            {scans.map((scan) => {
               const isManipulated = scan.result === 'DEEPFAKE (FAKE)';
               const isReview = scan.result === 'REVIEW REQUIRED';
-              const isVideo = scan.fileType.includes('Video') || scan.filename.endsWith('.mp4') || scan.filename.endsWith('.mov');
+              const isVideo = scan.fileType.includes('VIDEO') || scan.filename.endsWith('.mp4') || scan.filename.endsWith('.mov');
 
               return (
                 <tr
