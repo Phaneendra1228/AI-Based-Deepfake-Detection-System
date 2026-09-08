@@ -95,14 +95,21 @@ scansRouter.post('/', async (req: Request, res: Response): Promise<void> => {
       return;
     }
 
+    const normalizedFileType = String(payload.fileType || 'image').toLowerCase() === 'video' ? 'video' : 'image';
+    let normalizedRisk = String(payload.riskLevel || '').toUpperCase();
+    if (normalizedRisk === 'CRITICAL') normalizedRisk = 'HIGH';
+    if (!['LOW', 'MEDIUM', 'HIGH'].includes(normalizedRisk)) {
+      normalizedRisk = payload.result === 'DEEPFAKE (FAKE)' ? 'HIGH' : 'LOW';
+    }
+
     const newScan = new Scan({
       filename: payload.filename,
-      fileType: payload.fileType || 'image',
+      fileType: normalizedFileType,
       fileSize: payload.fileSize || '1.2 MB',
       fileHash: payload.fileHash,
       result: payload.result,
       confidence: payload.confidence,
-      riskLevel: payload.riskLevel || (payload.result === 'DEEPFAKE (FAKE)' ? 'HIGH' : 'LOW'),
+      riskLevel: normalizedRisk,
       orientation: payload.orientation || 'LANDSCAPE',
       aspectRatioLabel: payload.aspectRatioLabel || '16:9',
       mediaUrl: payload.mediaUrl || '',

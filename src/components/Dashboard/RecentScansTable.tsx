@@ -39,6 +39,18 @@ export const RecentScansTable: React.FC<RecentScansTableProps> = ({ onSelectScan
 
   useEffect(() => {
     loadScans();
+
+    const handleScanEvent = () => {
+      loadScans();
+    };
+
+    window.addEventListener('deepguard-scan-recorded', handleScanEvent);
+    window.addEventListener('focus', handleScanEvent);
+
+    return () => {
+      window.removeEventListener('deepguard-scan-recorded', handleScanEvent);
+      window.removeEventListener('focus', handleScanEvent);
+    };
   }, [filter]);
 
   const handleRowClick = (scan: RecentScan) => {
