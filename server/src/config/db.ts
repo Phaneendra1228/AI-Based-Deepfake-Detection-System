@@ -23,6 +23,7 @@ export const connectDatabase = async (): Promise<boolean> => {
 
     await mongoose.connect(uri, {
       serverSelectionTimeoutMS: 5000,
+      dbName: 'deepguard',
     });
 
     isConnected = true;
