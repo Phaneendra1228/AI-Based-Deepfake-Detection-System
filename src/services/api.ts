@@ -1,8 +1,14 @@
 import type { RecentScan, ClassificationResult, RiskLevel } from '../types';
 import { RECENT_SCANS } from '../data/mockData';
 
-const API_BASE_URL =
-  import.meta.env.VITE_API_URL || (import.meta.env.DEV ? 'http://localhost:5000/api' : '/api');
+const API_BASE_URL = (() => {
+  const envUrl = import.meta.env.VITE_API_URL;
+  if (!envUrl) {
+    return import.meta.env.DEV ? 'http://localhost:5000/api' : '/api';
+  }
+  const clean = envUrl.trim().replace(/\/+$/, '');
+  return clean.endsWith('/api') ? clean : `${clean}/api`;
+})();
 
 export interface HealthStatus {
   isOnline: boolean;
