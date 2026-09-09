@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Shield, Cpu, Volume2, VolumeX, Menu, X, ArrowRight, Activity, Sun, Moon } from 'lucide-react';
 import { sounds } from '../utils/soundEffects';
 import { PAGES_LIST, type PageId } from './PagePagination';
+import { LiveTelemetryTicker } from './LiveTelemetryTicker';
 
 interface NavbarProps {
   currentPage: PageId;
@@ -43,15 +44,17 @@ export const Navbar: React.FC<NavbarProps> = ({
   };
 
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
-          ? 'bg-white/90 dark:bg-slate-950/90 backdrop-blur-xl border-b border-slate-200/80 dark:border-slate-800/80 shadow-xs dark:shadow-slate-950/40 py-2.5'
-          : 'bg-white/70 dark:bg-slate-950/70 backdrop-blur-md border-b border-slate-200/50 dark:border-slate-800/50 py-3 sm:py-4'
-      }`}
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-        {/* Brand Logo */}
+    <header className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 shadow-xs">
+      {/* Primary Navigation Row */}
+      <div
+        className={`transition-all duration-300 ${
+          isScrolled
+            ? 'bg-white/95 dark:bg-slate-950/95 backdrop-blur-xl border-b border-slate-200/80 dark:border-slate-800/80 py-2.5'
+            : 'bg-white/90 dark:bg-slate-950/90 backdrop-blur-md border-b border-slate-200/50 dark:border-slate-800/50 py-3 sm:py-3.5'
+        }`}
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+          {/* Brand Logo */}
         <button
           onClick={() => handlePageClick('home')}
           className="flex items-center gap-3 group text-left"
@@ -164,9 +167,13 @@ export const Navbar: React.FC<NavbarProps> = ({
           </button>
         </div>
       </div>
+    </div>
 
-      {/* Mobile Menu Drawer */}
-      {mobileMenuOpen && (
+    {/* Operational Status Ticker (The Black Bar) */}
+    <LiveTelemetryTicker />
+
+    {/* Mobile Menu Drawer */}
+    {mobileMenuOpen && (
         <div className="lg:hidden bg-white/95 dark:bg-slate-950/95 border-b border-slate-200 dark:border-slate-800 backdrop-blur-2xl px-4 pt-3 pb-6 animate-fadeIn shadow-xl">
           <div className="flex flex-col gap-1.5">
             {PAGES_LIST.map((page) => {

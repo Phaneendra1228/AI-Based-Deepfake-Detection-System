@@ -4,7 +4,6 @@ import type { MediaSample } from './types';
 import { Navbar } from './components/Navbar';
 import { LoadingScreen } from './components/LoadingScreen';
 import { ScrollProgressBar } from './components/ScrollProgressBar';
-import { LiveTelemetryTicker } from './components/LiveTelemetryTicker';
 import { HeroSection } from './components/Hero/HeroSection';
 import { LiveThreatRadar } from './components/Hero/LiveThreatRadar';
 import { TrustStrip } from './components/TrustStrip';
@@ -132,10 +131,7 @@ export function App() {
       />
 
       {/* Main Page Container */}
-      <main className="relative z-10 pt-[74px] sm:pt-[82px] flex-1">
-        {/* Real-Time Operational Telemetry Ticker */}
-        <LiveTelemetryTicker />
-
+      <main className="relative z-10 pt-[104px] sm:pt-[112px] md:pt-[118px] flex-1">
         {/* ========================================================================= */}
         {/* PAGE 1: HOME (Hero, Live Threat Radar, Trust Strip, Threat Comparison)  */}
         {/* ========================================================================= */}
