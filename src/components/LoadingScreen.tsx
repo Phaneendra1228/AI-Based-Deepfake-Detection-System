@@ -118,7 +118,7 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
           alt=""
           className="w-full h-full object-cover opacity-15 dark:opacity-20"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-white/92 via-white/75 to-white/95 dark:from-slate-950/95 dark:via-slate-950/80 dark:to-slate-950/98" />
+        <div className="absolute inset-0 bg-gradient-to-b from-white/90 via-white/75 to-white/95 dark:from-slate-950/95 dark:via-slate-950/80 dark:to-slate-950/95" />
         <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[550px] bg-gradient-to-tr from-blue-200/40 via-cyan-100/50 to-indigo-100/40 dark:from-blue-600/15 dark:via-cyan-500/10 dark:to-indigo-600/15 rounded-full blur-3xl pointer-events-none animate-pulse" />
       </div>
 

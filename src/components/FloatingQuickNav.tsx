@@ -47,7 +47,7 @@ export const FloatingQuickNav: React.FC<FloatingQuickNavProps> = ({
   return (
     <aside
       aria-label="Quick Section Navigation"
-      className="fixed bottom-6 right-6 z-40 flex items-center gap-1.5 p-1.5 rounded-full bg-white/95 dark:bg-slate-900/95 border border-slate-200/90 dark:border-slate-800 shadow-2xl shadow-blue-500/10 dark:shadow-cyan-950/50 backdrop-blur-xl transition-all duration-300 transform-gpu"
+      className="fixed bottom-6 right-6 z-20 flex items-center gap-1.5 p-1.5 rounded-full bg-white/95 dark:bg-slate-900/95 border border-slate-200/90 dark:border-slate-800 shadow-2xl shadow-blue-500/10 dark:shadow-cyan-950/50 backdrop-blur-xl transition-all duration-300 transform-gpu"
     >
       <button
         onClick={() => handleGo('top')}

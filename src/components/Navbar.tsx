@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Shield, Cpu, Volume2, VolumeX, ArrowRight, Activity, Sun, Moon } from 'lucide-react';
+import { Shield, Cpu, Volume2, VolumeX, ArrowRight, Activity, Sun, Moon, ChevronRight } from 'lucide-react';
 import { sounds } from '../utils/soundEffects';
 import { PAGES_LIST, type PageId } from './PagePagination';
 import { LiveTelemetryTicker } from './LiveTelemetryTicker';
@@ -217,49 +217,54 @@ export const Navbar: React.FC<NavbarProps> = ({
     {/* Operational Status Ticker (The Black Bar) */}
     <LiveTelemetryTicker />
 
-    {/* Atmospheric Backdrop Overlay */}
+    {/* Atmospheric Backdrop Overlay (Dims background page when mobile menu is open) */}
     <div
       onClick={() => {
         sounds.playBlip();
         setMobileMenuOpen(false);
       }}
-      className={`fixed inset-0 top-[88px] sm:top-[98px] z-30 bg-slate-950/60 backdrop-blur-xs transition-opacity duration-300 lg:hidden ${
+      className={`fixed inset-0 top-0 z-30 bg-slate-950/50 dark:bg-slate-950/75 backdrop-blur-xs transition-opacity duration-300 lg:hidden ${
         mobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
       }`}
       aria-hidden="true"
     />
 
-    {/* Mobile Menu Drawer */}
+    {/* Mobile Menu Drawer (Solid background, crisp card items, silky GPU transform animation) */}
     <div
-      className={`lg:hidden overflow-hidden transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] bg-white/98 dark:bg-[#070b14]/98 border-b border-slate-200 dark:border-slate-800 backdrop-blur-xl shadow-2xl relative z-40 ${
+      className={`lg:hidden absolute top-full left-0 right-0 z-40 bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 shadow-2xl shadow-slate-900/20 dark:shadow-black/70 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] transform origin-top ${
         mobileMenuOpen
-          ? 'max-h-[calc(100vh-90px)] opacity-100 translate-y-0'
-          : 'max-h-0 opacity-0 -translate-y-3 pointer-events-none'
+          ? 'opacity-100 translate-y-0 visible pointer-events-auto scale-y-100'
+          : 'opacity-0 -translate-y-2.5 invisible pointer-events-none scale-y-95'
       }`}
+      style={{ willChange: 'transform, opacity' }}
     >
-      <div className="max-h-[calc(100vh-105px)] overflow-y-auto overscroll-contain px-4 pt-3 pb-8 flex flex-col gap-1.5 no-scrollbar">
+      <div className="max-h-[calc(100vh-100px)] overflow-y-auto overscroll-contain px-4 pt-3.5 pb-6 flex flex-col gap-2 no-scrollbar">
         {PAGES_LIST.map((page) => {
           const isActive = currentPage === page.id;
           return (
             <button
               key={page.id}
               onClick={() => handlePageClick(page.id)}
-              className={`text-left px-4 py-3 text-sm font-medium rounded-xl transition-all duration-150 flex items-center justify-between active:scale-[0.98] ${
+              className={`text-left px-4 py-3 text-sm font-semibold rounded-xl transition-all duration-150 flex items-center justify-between active:scale-[0.98] ${
                 isActive
                   ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold shadow-md shadow-blue-500/25'
-                  : 'text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-900 active:bg-blue-50/70 dark:active:bg-slate-800/80'
+                  : 'bg-slate-50 dark:bg-slate-900/80 border border-slate-200/90 dark:border-slate-800 text-slate-800 dark:text-slate-200 hover:bg-blue-50/80 dark:hover:bg-slate-800 hover:text-blue-600 dark:hover:text-cyan-400 active:bg-blue-100/70 dark:active:bg-slate-800'
               }`}
             >
               <div className="flex items-center gap-3">
-                <span className={`w-1.5 h-1.5 rounded-full ${isActive ? 'bg-white shadow-[0_0_6px_white]' : 'bg-blue-500 dark:bg-cyan-400 opacity-60'}`} />
+                <span
+                  className={`w-2 h-2 rounded-full shrink-0 ${
+                    isActive ? 'bg-white shadow-[0_0_8px_white]' : 'bg-blue-600 dark:bg-cyan-400 opacity-80'
+                  }`}
+                />
                 <span className="tracking-tight">{page.title}</span>
               </div>
               {isActive ? (
-                <span className="text-[10px] font-mono uppercase tracking-wider bg-white/20 text-white px-2 py-0.5 rounded-full font-bold">
+                <span className="text-[10px] font-mono uppercase tracking-wider bg-white/20 text-white px-2.5 py-0.5 rounded-full font-bold">
                   ACTIVE
                 </span>
               ) : (
-                <span className="text-slate-400 dark:text-slate-500 text-xs font-mono">→</span>
+                <ChevronRight className="w-4 h-4 text-slate-400 dark:text-slate-500 shrink-0" />
               )}
             </button>
           );
@@ -267,23 +272,30 @@ export const Navbar: React.FC<NavbarProps> = ({
 
         {/* Mobile Theme Switch Row */}
         {onToggleTheme && (
-          <div className="mt-2 pt-2.5 border-t border-slate-200/80 dark:border-slate-800/80 flex items-center justify-between px-3 py-2">
-            <span className="text-xs font-mono text-slate-600 dark:text-slate-400">Theme Mode</span>
+          <div className="mt-1 pt-3 border-t border-slate-200 dark:border-slate-800/80 flex items-center justify-between px-2 py-1">
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-mono font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider">
+                Appearance
+              </span>
+              <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-850 text-blue-600 dark:text-cyan-400 border border-slate-200 dark:border-slate-750">
+                {theme === 'dark' ? 'DARK MODE' : 'LIGHT MODE'}
+              </span>
+            </div>
             <button
               onClick={() => {
                 sounds.playBlip();
                 onToggleTheme();
               }}
-              className="flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs font-mono font-medium text-slate-700 dark:text-slate-300 active:scale-95 transition-transform"
+              className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs font-mono font-bold text-slate-800 dark:text-slate-200 shadow-2xs hover:border-blue-300 dark:hover:border-cyan-500 active:scale-95 transition-all"
             >
               {theme === 'dark' ? (
                 <>
-                  <Sun className="w-3.5 h-3.5 text-amber-400" />
+                  <Sun className="w-3.5 h-3.5 text-amber-500 fill-amber-500/20" />
                   <span>Dark Mode</span>
                 </>
               ) : (
                 <>
-                  <Moon className="w-3.5 h-3.5 text-slate-600" />
+                  <Moon className="w-3.5 h-3.5 text-slate-700 fill-slate-700/10" />
                   <span>Light Mode</span>
                 </>
               )}
@@ -291,17 +303,24 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
         )}
 
+        {/* Launch Scanner CTA */}
         <button
           onClick={() => {
             sounds.playBlip();
             onOpenScanner();
             setMobileMenuOpen(false);
           }}
-          className="mt-2.5 flex items-center justify-center gap-2 px-4 py-3.5 rounded-xl text-sm font-semibold bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 text-white shadow-lg shadow-blue-500/25 active:scale-[0.98] transition-all"
+          className="mt-2 flex items-center justify-center gap-2.5 px-4 py-3.5 rounded-xl text-sm font-bold bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 hover:from-blue-700 hover:to-indigo-800 text-white shadow-lg shadow-blue-500/25 active:scale-[0.98] transition-all"
         >
           <span>Launch Media Scanner</span>
           <ArrowRight className="w-4 h-4" />
         </button>
+
+        {/* Status indicator */}
+        <div className="mt-1 flex items-center justify-center gap-2 text-[11px] font-mono text-slate-500 dark:text-slate-400 py-1">
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+          <span>DeepGuard AI v4.8 • Core Systems Live</span>
+        </div>
       </div>
     </div>
     </header>
