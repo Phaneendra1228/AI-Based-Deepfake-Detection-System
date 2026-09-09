@@ -112,80 +112,26 @@ export const LiveTelemetryTicker: React.FC = () => {
   );
 
   return (
-    <div className="w-full bg-[#080d1a] dark:bg-[#030712] text-slate-300 text-[11px] font-mono border-b border-slate-800/90 py-1.5 px-3 sm:px-6 relative overflow-hidden z-20 shadow-md transition-colors duration-300">
+    <div
+      className="w-full bg-[#080d1a] dark:bg-[#030712] text-slate-300 text-[11px] font-mono border-b border-slate-800/90 py-1.5 px-2 sm:px-6 relative overflow-hidden z-20 shadow-md transition-colors duration-300 select-none group"
+      title="Live Global Media Forensics Telemetry Ticker"
+    >
       {/* Ambient background glow line */}
-      <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-cyan-500/60 to-transparent" />
+      <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-cyan-500/60 to-transparent pointer-events-none" />
 
-      {/* MOBILE / TABLET VIEW: Continuous infinite smooth looping marquee to the left */}
-      <div className="lg:hidden w-full overflow-hidden flex items-center [mask-image:linear-gradient(to_right,transparent,black_16px,black_calc(100%-16px),transparent)] [-webkit-mask-image:linear-gradient(to_right,transparent,black_16px,black_calc(100%-16px),transparent)]">
-        <div className="flex animate-marquee-left shrink-0">
-          {renderTickerContent('stream-part-1')}
-          {renderTickerContent('stream-part-2')}
-        </div>
-      </div>
-
-      {/* DESKTOP VIEW (>= lg): Structured command bar */}
-      <div className="hidden lg:flex max-w-7xl mx-auto items-center justify-between gap-4">
-        {/* Left: Global Sensor Status */}
-        <div className="flex items-center gap-3 shrink-0">
-          <div className="flex items-center gap-2 px-2 py-0.5 rounded bg-slate-800 border border-slate-700">
-            <span className="flex h-2 w-2 relative">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-            </span>
-            <span className="text-emerald-400 font-bold uppercase tracking-wider text-[10px]">
-              NETWORK LIVE
-            </span>
+      {/* Continuous infinite smooth looping marquee sliding to the left across all screens (Mobile, Tablet & Desktop) */}
+      <div className="w-full overflow-hidden flex items-center [mask-image:linear-gradient(to_right,transparent,black_24px,black_calc(100%-24px),transparent)] [-webkit-mask-image:linear-gradient(to_right,transparent,black_24px,black_calc(100%-24px),transparent)]">
+        <div className="flex animate-marquee-left shrink-0 group-hover:[animation-play-state:paused]">
+          {/* Loop Segment 1 */}
+          <div className="flex shrink-0">
+            {renderTickerContent('stream-part-1')}
+            {renderTickerContent('stream-part-2')}
           </div>
-          <span className="text-slate-400 hidden xl:inline">
-            Global Forensic Grid: <strong className="text-white">32 Edge Nodes Active</strong>
-          </span>
-        </div>
-
-        {/* Center: Live Real-time Counters */}
-        <div className="flex items-center gap-5 xl:gap-8 shrink-0 text-slate-300">
-          <div className="flex items-center gap-2">
-            <Globe className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
-            <span>
-              Scanned Today:{' '}
-              <span className="font-bold text-cyan-300 tabular-nums">
-                {scannedCount.toLocaleString()}
-              </span>
-            </span>
+          {/* Loop Segment 2 (Identical duplicate for seamless 100% continuous loop) */}
+          <div className="flex shrink-0">
+            {renderTickerContent('stream-part-3')}
+            {renderTickerContent('stream-part-4')}
           </div>
-
-          <div className="flex items-center gap-2">
-            <AlertTriangle className="w-3.5 h-3.5 text-rose-400 shrink-0" />
-            <span>
-              Deepfakes Blocked:{' '}
-              <span className="font-bold text-rose-300 tabular-nums">
-                {threatCount.toLocaleString()}
-              </span>
-            </span>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <Zap className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-            <span>
-              Inference Latency:{' '}
-              <span className="font-bold text-amber-300 tabular-nums">{latency}ms</span>
-            </span>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <ShieldCheck className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-            <span>
-              Precision: <strong className="text-white">99.98%</strong> NIST FRVT
-            </span>
-          </div>
-        </div>
-
-        {/* Right: Security Standard */}
-        <div className="flex items-center gap-2 text-slate-400 text-[10px] shrink-0">
-          <span className="px-1.5 py-0.5 rounded bg-slate-800/80 border border-slate-700 font-bold text-slate-300">
-            FIPS 140-3
-          </span>
-          <span className="hidden xl:inline">Zero-Retention Vault</span>
         </div>
       </div>
     </div>

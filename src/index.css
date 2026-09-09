@@ -265,7 +265,7 @@ html.dark .text-glow-crimson {
   animation: scanlineDrift 10s linear infinite;
 }
 
-/* Continuous Looping Marquee for Mobile Telemetry Ticker */
+/* Continuous Looping Marquee for Mobile & Desktop Telemetry Ticker */
 @keyframes marqueeLeft {
   0% {
     transform: translate3d(0, 0, 0);
@@ -278,10 +278,14 @@ html.dark .text-glow-crimson {
 .animate-marquee-left {
   display: flex;
   width: max-content;
-  animation: marqueeLeft 26s linear infinite;
+  animation: marqueeLeft 34s linear infinite;
   will-change: transform;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
+}
+
+.animate-marquee-left:hover {
+  animation-play-state: paused;
 }
 
 /* Reverse Spin for HUD Arc */
