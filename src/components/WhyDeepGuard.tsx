@@ -43,21 +43,21 @@ export const WhyDeepGuard: React.FC = () => {
   ];
 
   return (
-    <section id="why-deepguard" className="py-12 md:py-16 relative overflow-hidden bg-slate-50/60 border-b border-slate-200/80">
+    <section id="why-deepguard" className="py-12 md:py-16 relative overflow-hidden bg-slate-50/60 dark:bg-slate-950 border-b border-slate-200/80 dark:border-slate-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Header */}
         <div className="flex flex-col items-center text-center mb-8">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-50 border border-blue-200 text-xs font-mono font-semibold text-blue-700 mb-3 shadow-xs">
-            <Zap className="w-3.5 h-3.5 text-blue-600" />
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-50 dark:bg-blue-950/50 border border-blue-200 dark:border-blue-800/80 text-xs font-mono font-semibold text-blue-700 dark:text-blue-400 mb-3 shadow-xs">
+            <Zap className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
             <span>THE ADVANTAGE</span>
           </div>
 
-          <h2 className="font-display font-bold text-3xl sm:text-4xl text-slate-900 tracking-tight mb-3">
+          <h2 className="font-display font-bold text-3xl sm:text-4xl text-slate-900 dark:text-white tracking-tight mb-3">
             Detection Built for Modern Media.
           </h2>
 
-          <p className="text-sm sm:text-base text-slate-600 max-w-2xl">
+          <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 max-w-2xl">
             Compare DeepGuard AI automated media forensics against conventional manual inspection 
             and rudimentary single-layer filters.
           </p>
@@ -69,27 +69,27 @@ export const WhyDeepGuard: React.FC = () => {
             <div
               key={point.title}
               onMouseEnter={() => sounds.playBlip()}
-              className="bg-white rounded-2xl p-6 border border-slate-200 hover:border-blue-400 hover:shadow-xl transition-all duration-300 flex flex-col justify-between shadow-sm"
+              className="bg-white dark:bg-slate-900/90 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 hover:border-blue-400 dark:hover:border-blue-500/50 hover:shadow-xl dark:hover:shadow-blue-500/5 transition-all duration-300 flex flex-col justify-between shadow-sm"
             >
               <div>
-                <div className="w-10 h-10 rounded-xl bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-600 mb-4 shadow-xs">
+                <div className="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-950/60 border border-blue-100 dark:border-blue-800/60 flex items-center justify-center text-blue-600 dark:text-blue-400 mb-4 shadow-xs">
                   <Check className="w-5 h-5" />
                 </div>
 
-                <h3 className="font-display font-bold text-lg text-slate-900 mb-2">
+                <h3 className="font-display font-bold text-lg text-slate-900 dark:text-white mb-2">
                   {point.title}
                 </h3>
 
-                <p className="text-sm text-slate-600 leading-relaxed mb-4">
+                <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-4">
                   {point.desc}
                 </p>
               </div>
 
-              <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-mono">
-                <span className="text-blue-700 font-bold flex items-center gap-1">
-                  <Check className="w-3.5 h-3.5 text-blue-600" /> DeepGuard AI
+              <div className="pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-xs font-mono">
+                <span className="text-blue-700 dark:text-blue-400 font-bold flex items-center gap-1">
+                  <Check className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" /> DeepGuard AI
                 </span>
-                <span className="text-slate-400 flex items-center gap-1 font-medium">
+                <span className="text-slate-400 dark:text-slate-500 flex items-center gap-1 font-medium">
                   <X className="w-3.5 h-3.5" /> Legacy Manual
                 </span>
               </div>

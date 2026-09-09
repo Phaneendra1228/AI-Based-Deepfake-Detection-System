@@ -44,7 +44,7 @@ export const PagePagination: React.FC<PagePaginationProps> = ({ currentPage, onN
   };
 
   return (
-    <div className="w-full py-12 px-4 sm:px-6 lg:px-8 border-t border-slate-200/80 bg-slate-50/70 relative z-20">
+    <div className="w-full py-12 px-4 sm:px-6 lg:px-8 border-t border-slate-200/80 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-950/80 relative z-20">
       <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6">
         
         {/* Previous Page Button */}
@@ -52,12 +52,12 @@ export const PagePagination: React.FC<PagePaginationProps> = ({ currentPage, onN
           {prevPage ? (
             <button
               onClick={() => handleGo(prevPage.id)}
-              className="group flex items-center gap-3 px-5 py-3 rounded-2xl bg-white border border-slate-200 text-slate-700 hover:text-blue-600 hover:border-blue-300 hover:shadow-md transition-all shadow-xs w-full sm:w-auto"
+              className="group flex items-center gap-3 px-5 py-3 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 hover:border-blue-300 dark:hover:border-blue-500/50 hover:shadow-md transition-all shadow-xs w-full sm:w-auto"
             >
-              <ArrowLeft className="w-4 h-4 text-blue-600 transition-transform group-hover:-translate-x-1" />
+              <ArrowLeft className="w-4 h-4 text-blue-600 dark:text-blue-400 transition-transform group-hover:-translate-x-1" />
               <div className="text-left">
-                <div className="text-[10px] font-mono uppercase text-slate-400">Previous Page</div>
-                <div className="text-sm font-display font-bold text-slate-900 group-hover:text-blue-600">
+                <div className="text-[10px] font-mono uppercase text-slate-400 dark:text-slate-500">Previous Page</div>
+                <div className="text-sm font-display font-bold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400">
                   {prevPage.title}
                 </div>
               </div>
@@ -69,12 +69,12 @@ export const PagePagination: React.FC<PagePaginationProps> = ({ currentPage, onN
 
         {/* Center: Interactive Page Dots / Stepper */}
         <div className="flex flex-col items-center gap-2.5">
-          <div className="text-xs font-mono text-slate-500">
-            Page <span className="font-bold text-slate-900">{currentIndex + 1}</span> of{' '}
-            <span className="font-bold text-slate-900">{PAGES_LIST.length}</span>: {PAGES_LIST[currentIndex].title}
+          <div className="text-xs font-mono text-slate-500 dark:text-slate-400">
+            Page <span className="font-bold text-slate-900 dark:text-slate-200">{currentIndex + 1}</span> of{' '}
+            <span className="font-bold text-slate-900 dark:text-slate-200">{PAGES_LIST.length}</span>: {PAGES_LIST[currentIndex].title}
           </div>
 
-          <div className="flex items-center gap-1.5 p-1 rounded-full bg-white border border-slate-200 shadow-xs">
+          <div className="flex items-center gap-1.5 p-1 rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs">
             {PAGES_LIST.map((page, idx) => {
               const isActive = page.id === currentPage;
               return (
@@ -85,7 +85,7 @@ export const PagePagination: React.FC<PagePaginationProps> = ({ currentPage, onN
                   className={`h-7 px-2.5 rounded-full text-xs font-mono font-medium transition-all ${
                     isActive
                       ? 'bg-blue-600 text-white font-bold shadow-xs'
-                      : 'text-slate-600 hover:text-blue-600 hover:bg-slate-100'
+                      : 'text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-100 dark:hover:bg-slate-800'
                   }`}
                 >
                   {idx + 1}. {page.title}
@@ -113,15 +113,15 @@ export const PagePagination: React.FC<PagePaginationProps> = ({ currentPage, onN
           ) : (
             <button
               onClick={() => handleGo('home')}
-              className="group flex items-center justify-end gap-3 px-6 py-3 rounded-2xl bg-white border border-slate-200 text-slate-800 hover:text-blue-600 hover:border-blue-300 shadow-sm transition-all w-full sm:w-auto"
+              className="group flex items-center justify-end gap-3 px-6 py-3 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 hover:text-blue-600 dark:hover:text-blue-400 hover:border-blue-300 dark:hover:border-blue-500/50 shadow-sm transition-all w-full sm:w-auto"
             >
               <div className="text-right">
-                <div className="text-[10px] font-mono uppercase text-slate-400">Restart Tour</div>
-                <div className="text-sm font-display font-bold text-slate-900 group-hover:text-blue-600">
+                <div className="text-[10px] font-mono uppercase text-slate-400 dark:text-slate-500">Restart Tour</div>
+                <div className="text-sm font-display font-bold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400">
                   Return to Home
                 </div>
               </div>
-              <RotateCcw className="w-4 h-4 text-blue-600 transition-transform group-hover:rotate-180 duration-500" />
+              <RotateCcw className="w-4 h-4 text-blue-600 dark:text-blue-400 transition-transform group-hover:rotate-180 duration-500" />
             </button>
           )}
         </div>

@@ -3,6 +3,7 @@ import { SAMPLE_MEDIA } from './data/mockData';
 import type { MediaSample } from './types';
 import { Navbar } from './components/Navbar';
 import { LoadingScreen } from './components/LoadingScreen';
+import { ScrollProgressBar } from './components/ScrollProgressBar';
 import { LiveTelemetryTicker } from './components/LiveTelemetryTicker';
 import { HeroSection } from './components/Hero/HeroSection';
 import { LiveThreatRadar } from './components/Hero/LiveThreatRadar';
@@ -20,7 +21,8 @@ import { WhyDeepGuard } from './components/WhyDeepGuard';
 import { CTASection } from './components/CTASection';
 import { FloatingQuickNav } from './components/FloatingQuickNav';
 import { Footer } from './components/Footer';
-import { PAGES_LIST, type PageId } from './components/PagePagination';
+import { PagePagination, PAGES_LIST, type PageId } from './components/PagePagination';
+import { sounds } from './utils/soundEffects';
 
 export function App() {
   const [currentPage, setCurrentPage] = useState<PageId>('home');
@@ -28,21 +30,44 @@ export function App() {
   const [activeSample, setActiveSample] = useState<MediaSample>(SAMPLE_MEDIA[0]);
   const [scannerTriggerCount, setScannerTriggerCount] = useState<number>(0);
 
+  // Persistent Dark / Light Theme State
+  const [theme, setTheme] = useState<'light' | 'dark'>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('deepguard-theme');
+      if (saved === 'dark' || saved === 'light') return saved;
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+    return 'light';
+  });
+
+  // Sync theme class to <html> root element
+  useEffect(() => {
+    const root = document.documentElement;
+    if (theme === 'dark') {
+      root.classList.add('dark');
+    } else {
+      root.classList.remove('dark');
+    }
+    localStorage.setItem('deepguard-theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    sounds.playBlip();
+    setTheme((t) => (t === 'dark' ? 'light' : 'dark'));
+  };
+
   // Always reset to 'home' on reload / initial launch
   useEffect(() => {
-    // 1. Prevent browser from remembering previous scroll position on reload
     if ('scrollRestoration' in window.history) {
       window.history.scrollRestoration = 'manual';
     }
 
-    // 2. Always force Home page on reload / initial launch
     setCurrentPage('home');
     if (window.location.hash && window.location.hash !== '#home') {
       window.history.replaceState(null, '', window.location.pathname + '#home');
     }
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
 
-    // 3. Listen for subsequent user hash changes (navigating via back/forward buttons or links)
     const handleHashChange = () => {
       const hash = window.location.hash.replace('#', '') as PageId;
       if (PAGES_LIST.some((p) => p.id === hash)) {
@@ -52,7 +77,6 @@ export function App() {
       }
     };
 
-    // 4. Ensure hash resets to #home if user triggers reload
     const handleBeforeUnload = () => {
       window.history.replaceState(null, '', window.location.pathname + '#home');
     };
@@ -77,7 +101,10 @@ export function App() {
   };
 
   return (
-    <div className="min-h-screen bg-white text-slate-900 selection:bg-blue-500/20 selection:text-blue-700 font-sans relative overflow-x-hidden flex flex-col justify-between">
+    <div className="min-h-screen bg-white dark:bg-[#060913] text-slate-900 dark:text-slate-100 selection:bg-blue-500/20 dark:selection:bg-cyan-500/30 selection:text-blue-700 dark:selection:text-cyan-300 font-sans relative overflow-x-hidden flex flex-col justify-between transition-colors duration-300">
+      {/* Scroll Progress Neon Gradient Bar */}
+      <ScrollProgressBar />
+
       {/* High-Tech AI Biometric Boot / Loading Screen on Site Open */}
       {isLoading && (
         <LoadingScreen onComplete={() => setIsLoading(false)} />
@@ -88,16 +115,18 @@ export function App() {
         <img
           src="/images/bg-cyber-network.jpg"
           alt=""
-          className="w-full h-full object-cover opacity-20 transform-gpu"
+          className="w-full h-full object-cover opacity-20 dark:opacity-10 transform-gpu"
           loading="eager"
         />
-        {/* Soft Radial Gradient Light Wash for Readability & Contrast */}
-        <div className="absolute inset-0 bg-gradient-to-b from-white/85 via-white/60 to-white/90" />
+        {/* Soft Radial Gradient Wash for Contrast */}
+        <div className="absolute inset-0 bg-gradient-to-b from-white/85 via-white/60 to-white/90 dark:from-[#060913]/90 dark:via-[#060913]/75 dark:to-[#060913]/95" />
       </div>
 
       {/* Global Navbar */}
       <Navbar
         currentPage={currentPage}
+        theme={theme}
+        onToggleTheme={toggleTheme}
         onNavigate={handleNavigate}
         onOpenScanner={handleLaunchAnalysis}
       />
@@ -111,7 +140,7 @@ export function App() {
         {/* PAGE 1: HOME (Hero, Live Threat Radar, Trust Strip, Threat Comparison)  */}
         {/* ========================================================================= */}
         {currentPage === 'home' && (
-          <div className="animate-fade-in">
+          <div key="home" className="page-transition">
             <HeroSection
               onAnalyzeClick={handleLaunchAnalysis}
               onExploreTechClick={() => handleNavigate('technology')}
@@ -127,7 +156,7 @@ export function App() {
         {/* PAGE 2: TECHNOLOGY (Algorithmic CNN/SVM Architecture & 5-Stage Pipeline) */}
         {/* ========================================================================= */}
         {currentPage === 'technology' && (
-          <div className="animate-fade-in">
+          <div key="technology" className="page-transition">
             <TechSection />
             <HowItWorks />
           </div>
@@ -137,7 +166,7 @@ export function App() {
         {/* PAGE 3: SCANNER (Dedicated Interactive AI Biometric Inspection Lab)      */}
         {/* ========================================================================= */}
         {currentPage === 'scanner' && (
-          <div className="animate-fade-in">
+          <div key="scanner" className="page-transition">
             <MediaScanner
               autoTriggerCount={scannerTriggerCount}
               onScanComplete={(sample) => setActiveSample(sample)}
@@ -150,7 +179,7 @@ export function App() {
         {/* PAGE 4: FORENSICS (Explainable AI Dossier, ELA Heatmap, Biometric Metrics)*/}
         {/* ========================================================================= */}
         {currentPage === 'forensics' && (
-          <div className="animate-fade-in">
+          <div key="forensics" className="page-transition">
             <ForensicReport sample={activeSample} />
           </div>
         )}
@@ -159,7 +188,7 @@ export function App() {
         {/* PAGE 5: APPLICATIONS (5 Mission-Critical Enterprise Trust Sectors)        */}
         {/* ========================================================================= */}
         {currentPage === 'applications' && (
-          <div className="animate-fade-in">
+          <div key="applications" className="page-transition">
             <Applications />
           </div>
         )}
@@ -168,7 +197,7 @@ export function App() {
         {/* PAGE 6: CASE STUDIES (Field-Proven Customer Stories & DeepGuard Advantage)*/}
         {/* ========================================================================= */}
         {currentPage === 'case-studies' && (
-          <div className="animate-fade-in">
+          <div key="case-studies" className="page-transition">
             <CustomerStories />
             <WhyDeepGuard />
           </div>
@@ -178,7 +207,7 @@ export function App() {
         {/* PAGE 7: DASHBOARD (Fleet Command Center, Live Threat Matrix, Final CTA)  */}
         {/* ========================================================================= */}
         {currentPage === 'dashboard' && (
-          <div className="animate-fade-in">
+          <div key="dashboard" className="page-transition">
             <DashboardPreview />
             <CTASection
               onLaunchScanner={handleLaunchAnalysis}
@@ -187,6 +216,9 @@ export function App() {
           </div>
         )}
       </main>
+
+      {/* Interactive Bottom Page Tour / Stepper Navigation */}
+      <PagePagination currentPage={currentPage} onNavigate={handleNavigate} />
 
       {/* Global Enterprise Footer */}
       <Footer onNavigate={handleNavigate} onRebootBootScreen={() => setIsLoading(true)} />

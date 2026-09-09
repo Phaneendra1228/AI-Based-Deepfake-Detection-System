@@ -20,7 +20,7 @@ export const LiveTelemetryTicker: React.FC = () => {
   }, []);
 
   return (
-    <div className="w-full bg-slate-900 text-slate-300 text-[11px] font-mono border-b border-slate-800/80 py-2 px-4 sm:px-6 relative overflow-hidden z-30 shadow-inner">
+    <div className="w-full bg-slate-900 dark:bg-slate-950 text-slate-300 text-[11px] font-mono border-b border-slate-800/80 dark:border-slate-800/60 py-2 px-4 sm:px-6 relative overflow-hidden z-30 shadow-inner transition-colors duration-300">
       {/* Ambient background glow line */}
       <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent" />
 

@@ -57,21 +57,21 @@ export const Applications: React.FC = () => {
   ];
 
   return (
-    <section id="applications" className="py-12 md:py-16 relative overflow-hidden bg-slate-50/60 border-b border-slate-200/80">
+    <section id="applications" className="py-12 md:py-16 relative overflow-hidden bg-slate-50/60 dark:bg-slate-950 border-b border-slate-200/80 dark:border-slate-800/80 transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Header */}
         <div className="flex flex-col items-center text-center mb-8">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-xs font-mono font-semibold text-emerald-700 mb-3 shadow-xs">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800/60 text-xs font-mono font-semibold text-emerald-700 dark:text-emerald-400 mb-3 shadow-xs">
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
             <span>ENTERPRISE HORIZONS</span>
           </div>
 
-          <h2 className="font-display font-bold text-3xl sm:text-4xl text-slate-900 tracking-tight mb-3">
+          <h2 className="font-display font-bold text-3xl sm:text-4xl text-slate-900 dark:text-white tracking-tight mb-3">
             Built for Digital Trust.
           </h2>
 
-          <p className="text-sm sm:text-base text-slate-600 max-w-2xl">
+          <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 max-w-2xl">
             From intelligence agencies and newsrooms to financial institutions and social networks, 
             DeepGuard AI provides mission-critical synthetic media protection.
           </p>
@@ -86,7 +86,7 @@ export const Applications: React.FC = () => {
               <div
                 key={app.title}
                 onMouseEnter={() => sounds.playBlip()}
-                className={`group rounded-3xl overflow-hidden flex flex-col justify-between transition-all duration-300 bg-white border border-slate-200 hover:border-blue-400 hover:shadow-2xl hover:-translate-y-1.5 shadow-sm ${
+                className={`group rounded-3xl overflow-hidden flex flex-col justify-between transition-all duration-300 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-blue-400 dark:hover:border-cyan-500/50 hover:shadow-2xl hover:-translate-y-1.5 shadow-sm ${
                   idx === 0 ? 'lg:col-span-1' : ''
                 }`}
               >
@@ -102,7 +102,7 @@ export const Applications: React.FC = () => {
 
                   {/* Sector Tag & Status Badge */}
                   <div className="absolute top-3 inset-x-3 flex items-center justify-between">
-                    <span className={`px-2.5 py-1 rounded-md text-[10px] font-mono font-bold border backdrop-blur-md shadow-sm ${app.badgeColor}`}>
+                    <span className={`px-2.5 py-1 rounded-md text-[10px] font-mono font-bold border backdrop-blur-md shadow-sm ${app.badgeColor} dark:bg-slate-900/90 dark:border-slate-700`}>
                       ● {app.badge}
                     </span>
 
@@ -124,16 +124,16 @@ export const Applications: React.FC = () => {
 
                 {/* Card Content */}
                 <div className="p-6 flex-1 flex flex-col justify-between">
-                  <p className="text-sm text-slate-600 leading-relaxed mb-5">
+                  <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed mb-5">
                     {app.description}
                   </p>
 
-                  <div className="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-mono text-slate-500">
-                    <div className="flex items-center gap-1.5 text-blue-600 font-semibold">
+                  <div className="pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs font-mono text-slate-500 dark:text-slate-400">
+                    <div className="flex items-center gap-1.5 text-blue-600 dark:text-cyan-400 font-semibold">
                       <CheckCircle2 className="w-3.5 h-3.5" />
                       <span>{app.metric}</span>
                     </div>
-                    <ArrowUpRight className="w-4 h-4 text-slate-400 group-hover:text-blue-600 transition-colors" />
+                    <ArrowUpRight className="w-4 h-4 text-slate-400 group-hover:text-blue-600 dark:group-hover:text-cyan-400 transition-colors" />
                   </div>
                 </div>
               </div>

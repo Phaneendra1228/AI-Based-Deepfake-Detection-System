@@ -107,7 +107,7 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
 
   return (
     <div
-      className={`fixed inset-0 z-[9999] flex flex-col items-center justify-between bg-white text-slate-900 transition-all duration-500 ease-out select-none ${
+      className={`fixed inset-0 z-[9999] flex flex-col items-center justify-between bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-all duration-500 ease-out select-none ${
         isExiting ? 'opacity-0 scale-[1.02] pointer-events-none blur-[2px]' : 'opacity-100 scale-100'
       }`}
     >
@@ -116,28 +116,28 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
         <img
           src="/images/bg-cyber-network.jpg"
           alt=""
-          className="w-full h-full object-cover opacity-15"
+          className="w-full h-full object-cover opacity-15 dark:opacity-20"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-white/92 via-white/75 to-white/95" />
-        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[550px] bg-gradient-to-tr from-blue-200/40 via-cyan-100/50 to-indigo-100/40 rounded-full blur-3xl pointer-events-none animate-pulse" />
+        <div className="absolute inset-0 bg-gradient-to-b from-white/92 via-white/75 to-white/95 dark:from-slate-950/95 dark:via-slate-950/80 dark:to-slate-950/98" />
+        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[550px] bg-gradient-to-tr from-blue-200/40 via-cyan-100/50 to-indigo-100/40 dark:from-blue-600/15 dark:via-cyan-500/10 dark:to-indigo-600/15 rounded-full blur-3xl pointer-events-none animate-pulse" />
       </div>
 
       {/* Top Header Bar */}
       <div className="w-full max-w-6xl mx-auto px-6 pt-6 sm:pt-8 flex items-center justify-between relative z-10">
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-xl bg-blue-50 border border-blue-200/80 flex items-center justify-center shadow-xs">
-            <Shield className="w-5 h-5 text-blue-600" />
+          <div className="w-9 h-9 rounded-xl bg-blue-50 dark:bg-blue-950/60 border border-blue-200/80 dark:border-blue-800/80 flex items-center justify-center shadow-xs">
+            <Shield className="w-5 h-5 text-blue-600 dark:text-blue-400" />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <span className="font-display font-bold text-sm sm:text-base tracking-tight text-slate-900">
-                DeepGuard <span className="text-blue-600">AI</span>
+              <span className="font-display font-bold text-sm sm:text-base tracking-tight text-slate-900 dark:text-white">
+                DeepGuard <span className="text-blue-600 dark:text-blue-400">AI</span>
               </span>
-              <span className="px-1.5 py-0.5 rounded text-[10px] font-mono font-bold bg-blue-50 text-blue-700 border border-blue-200">
+              <span className="px-1.5 py-0.5 rounded text-[10px] font-mono font-bold bg-blue-50 dark:bg-blue-950/70 text-blue-700 dark:text-blue-400 border border-blue-200 dark:border-blue-800">
                 BOOT v4.8
               </span>
             </div>
-            <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest block">
+            <span className="text-[10px] font-mono text-slate-500 dark:text-slate-400 uppercase tracking-widest block">
               Autonomous Media Forensics
             </span>
           </div>
@@ -146,7 +146,7 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
         {/* Skip Button */}
         <button
           onClick={handleSkip}
-          className="group flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-100 hover:bg-slate-200 border border-slate-200 text-xs font-mono font-medium text-slate-600 hover:text-slate-900 transition-all shadow-xs cursor-pointer"
+          className="group flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-100 dark:bg-slate-900 hover:bg-slate-200 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 text-xs font-mono font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-all shadow-xs cursor-pointer"
         >
           <span>Skip Boot</span>
           <FastForward className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
@@ -183,33 +183,33 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
           <div className="absolute -bottom-1 -right-1 w-4 h-4 border-b-2 border-r-2 border-blue-600" />
 
           {/* Inner Glowing Shield & Laser Sweep */}
-          <div className="relative z-10 flex flex-col items-center justify-center w-24 h-24 rounded-2xl bg-white border border-blue-200 shadow-xl overflow-hidden group">
+          <div className="relative z-10 flex flex-col items-center justify-center w-24 h-24 rounded-2xl bg-white dark:bg-slate-900 border border-blue-200 dark:border-blue-800 shadow-xl overflow-hidden group">
             {/* High-Tech Sweep Line */}
             <div className="absolute inset-0 pointer-events-none overflow-hidden">
               <div className="w-full h-1 bg-gradient-to-r from-transparent via-cyan-400 to-transparent shadow-[0_0_12px_#06b6d4] animate-laser-sweep" />
             </div>
 
-            <Shield className="w-10 h-10 text-blue-600 drop-shadow-sm transition-transform duration-300 group-hover:scale-110" />
+            <Shield className="w-10 h-10 text-blue-600 dark:text-blue-400 drop-shadow-sm transition-transform duration-300 group-hover:scale-110" />
             <Cpu className="w-4 h-4 text-cyan-500 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 animate-pulse" />
 
             <div className="absolute bottom-1.5 flex items-center gap-1">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping" />
-              <span className="text-[8px] font-mono font-bold text-slate-500">READY</span>
+              <span className="text-[8px] font-mono font-bold text-slate-500 dark:text-slate-400">READY</span>
             </div>
           </div>
         </div>
 
         {/* System Title */}
         <div className="mb-6">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200/80 text-[11px] font-mono text-blue-700 font-semibold mb-2 shadow-xs">
-            <Radio className="w-3 h-3 text-blue-600 animate-pulse" />
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-950/60 border border-blue-200/80 dark:border-blue-800/80 text-[11px] font-mono text-blue-700 dark:text-blue-400 font-semibold mb-2 shadow-xs">
+            <Radio className="w-3 h-3 text-blue-600 dark:text-blue-400 animate-pulse" />
             <span>AI QUANTUM FORENSIC ENGINE</span>
           </div>
 
-          <h1 className="font-display font-bold text-2xl sm:text-3xl text-slate-900 tracking-tight">
+          <h1 className="font-display font-bold text-2xl sm:text-3xl text-slate-900 dark:text-white tracking-tight">
             Calibrating Defense Grid
           </h1>
-          <p className="text-xs sm:text-sm text-slate-500 mt-1 max-w-sm mx-auto font-mono">
+          <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1 max-w-sm mx-auto font-mono">
             {activeStep.detail}
           </p>
         </div>
@@ -217,16 +217,16 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
         {/* Progress Bar & Percentage */}
         <div className="w-full space-y-2 mb-6">
           <div className="flex items-center justify-between text-xs font-mono">
-            <span className="text-slate-500 font-medium tracking-wider">
+            <span className="text-slate-500 dark:text-slate-400 font-medium tracking-wider">
               {activeStep.stage}
             </span>
-            <span className="font-bold text-blue-600 tabular-nums text-sm">
+            <span className="font-bold text-blue-600 dark:text-blue-400 tabular-nums text-sm">
               {progress}%
             </span>
           </div>
 
           {/* Cyber Track */}
-          <div className="relative w-full h-2.5 rounded-full bg-slate-100 border border-slate-200 overflow-hidden p-0.5">
+          <div className="relative w-full h-2.5 rounded-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 overflow-hidden p-0.5">
             <div
               className="h-full rounded-full bg-gradient-to-r from-blue-600 via-cyan-500 to-indigo-600 transition-all duration-100 ease-out relative shadow-[0_0_12px_rgba(37,99,235,0.4)]"
               style={{ width: `${progress}%` }}
@@ -262,24 +262,24 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
 
       {/* Bottom Global Status Bar */}
       <div className="w-full max-w-6xl mx-auto px-6 pb-6 sm:pb-8 relative z-10">
-        <div className="pt-4 border-t border-slate-200/80 flex flex-wrap items-center justify-between gap-4 text-xs font-mono text-slate-500">
+        <div className="pt-4 border-t border-slate-200/80 dark:border-slate-800 flex flex-wrap items-center justify-between gap-4 text-xs font-mono text-slate-500 dark:text-slate-400">
           <div className="flex items-center gap-5">
             <div className="flex items-center gap-2">
               <Zap className="w-3.5 h-3.5 text-amber-500" />
-              <span>LATENCY: <strong className="text-slate-800">12ms</strong></span>
+              <span>LATENCY: <strong className="text-slate-800 dark:text-slate-200">12ms</strong></span>
             </div>
             <div className="flex items-center gap-2">
               <Activity className="w-3.5 h-3.5 text-emerald-500" />
-              <span>EDGE MESH: <strong className="text-slate-800">32 NODES SYNCED</strong></span>
+              <span>EDGE MESH: <strong className="text-slate-800 dark:text-slate-200">32 NODES SYNCED</strong></span>
             </div>
           </div>
 
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-1.5">
-              <CheckCircle2 className="w-3.5 h-3.5 text-blue-600" />
-              <span>NIST FRVT ACCURACY: <strong className="text-slate-800">99.98%</strong></span>
+              <CheckCircle2 className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
+              <span>NIST FRVT ACCURACY: <strong className="text-slate-800 dark:text-slate-200">99.98%</strong></span>
             </div>
-            <span className="text-slate-300 hidden sm:inline">|</span>
+            <span className="text-slate-300 dark:text-slate-700 hidden sm:inline">|</span>
             <span className="hidden sm:inline text-slate-400">FIPS 140-3 ZERO-RETENTION VAULT</span>
           </div>
         </div>

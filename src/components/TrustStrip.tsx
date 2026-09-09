@@ -15,13 +15,13 @@ export const TrustStrip: React.FC = () => {
   ];
 
   return (
-    <div id="trust-strip" className="relative py-10 border-y border-slate-200/80 bg-slate-50/70 backdrop-blur-md">
+    <div id="trust-strip" className="relative py-10 border-y border-slate-200/80 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-900/80 backdrop-blur-md transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           {/* Label */}
           <div className="flex items-center gap-3 shrink-0">
-            <div className="w-2.5 h-2.5 rounded-full bg-blue-600 animate-ping" />
-            <span className="text-xs sm:text-sm font-mono tracking-wider text-slate-700 uppercase font-semibold">
+            <div className="w-2.5 h-2.5 rounded-full bg-blue-600 dark:bg-cyan-400 animate-ping" />
+            <span className="text-xs sm:text-sm font-mono tracking-wider text-slate-700 dark:text-slate-300 uppercase font-semibold">
               Built for the fight against synthetic media
             </span>
           </div>
@@ -34,7 +34,7 @@ export const TrustStrip: React.FC = () => {
                 <div
                   key={chip.name}
                   onMouseEnter={() => sounds.playBlip()}
-                  className="group flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-xs font-mono text-slate-700 hover:text-slate-900 hover:border-blue-300 hover:shadow-md transition-all cursor-default shadow-xs"
+                  className="group flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-xs font-mono text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:border-blue-300 dark:hover:border-cyan-500/50 hover:shadow-md transition-all cursor-default shadow-xs"
                 >
                   <Icon className={`w-3.5 h-3.5 ${chip.color} transition-transform group-hover:scale-110`} />
                   <span className="font-medium">{chip.name}</span>

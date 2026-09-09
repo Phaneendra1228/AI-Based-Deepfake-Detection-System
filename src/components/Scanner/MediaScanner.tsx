@@ -290,37 +290,37 @@ export const MediaScanner: React.FC<MediaScannerProps> = ({
   const currentStageObj = FORENSIC_STAGES[Math.min(Math.max(activeStageIndex, 0), FORENSIC_STAGES.length - 1)];
 
   return (
-    <section id="scanner" className="py-12 md:py-16 relative overflow-hidden bg-white border-b border-slate-200/80 scroll-mt-20">
+    <section id="scanner" className="py-12 md:py-16 relative overflow-hidden bg-white dark:bg-slate-950 border-b border-slate-200/80 dark:border-slate-800/80 transition-colors duration-300 scroll-mt-20">
       {/* Background ambient lighting */}
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-full max-w-5xl h-80 bg-blue-100/30 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-full max-w-5xl h-80 bg-blue-100/30 dark:bg-blue-600/10 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <div className="flex flex-col items-center text-center mb-8">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-50 border border-blue-200 text-xs font-mono font-semibold text-blue-700 mb-3 shadow-xs">
-            <Sliders className="w-3.5 h-3.5 text-blue-600" />
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-50 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-800/60 text-xs font-mono font-semibold text-blue-700 dark:text-cyan-400 mb-3 shadow-xs">
+            <Sliders className="w-3.5 h-3.5 text-blue-600 dark:text-cyan-400" />
             <span>INTERACTIVE FORENSIC LABORATORY</span>
           </div>
 
-          <h2 className="font-display font-bold text-3xl sm:text-4xl text-slate-900 tracking-tight mb-3">
+          <h2 className="font-display font-bold text-3xl sm:text-4xl text-slate-900 dark:text-white tracking-tight mb-3">
             AI Media Scanner.
           </h2>
 
-          <p className="text-sm sm:text-base text-slate-600 max-w-2xl">
+          <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 max-w-2xl">
             Upload an image or video to inspect facial micro-movements, frequency domain anomalies, 
             and neural network classification markers in real time.
           </p>
 
           {/* Explicit Demonstration Notice */}
-          <div className="mt-3 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-slate-100 border border-slate-200 text-xs font-mono text-slate-600 shadow-xs">
-            <Info className="w-3.5 h-3.5 text-blue-600" />
+          <div className="mt-3 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs font-mono text-slate-600 dark:text-slate-400 shadow-xs">
+            <Info className="w-3.5 h-3.5 text-blue-600 dark:text-cyan-400" />
             <span>DEMO MODE — High-Fidelity Multi-Vector Forensic Simulation</span>
           </div>
         </div>
 
         {/* Preset Sample Quick-Switcher Strip */}
         <div className="mb-4 flex flex-col sm:flex-row items-center justify-center gap-3">
-          <span className="text-xs font-mono text-slate-500 shrink-0 font-medium">Quick Test Samples:</span>
+          <span className="text-xs font-mono text-slate-500 dark:text-slate-400 shrink-0 font-medium">Quick Test Samples:</span>
           <div className="w-full sm:w-auto flex items-center gap-2 overflow-x-auto no-scrollbar py-1 px-1 smooth-touch-scroll justify-start sm:justify-center">
             {SAMPLE_MEDIA.map((sample) => {
               const isSelected = selectedSample.id === sample.id;
@@ -334,15 +334,15 @@ export const MediaScanner: React.FC<MediaScannerProps> = ({
                   className={`px-3 py-1.5 rounded-xl text-xs font-mono transition-all flex items-center gap-2 shrink-0 ${
                     isSelected
                       ? isDanger
-                        ? 'bg-rose-50 border-2 border-rose-500 text-rose-900 shadow-sm font-bold'
-                        : 'bg-emerald-50 border-2 border-emerald-500 text-emerald-900 shadow-sm font-bold'
-                      : 'bg-slate-50 border border-slate-200 text-slate-700 hover:border-slate-300 hover:bg-slate-100 font-medium'
+                        ? 'bg-rose-50 dark:bg-rose-950/60 border-2 border-rose-500 text-rose-900 dark:text-rose-200 shadow-sm font-bold'
+                        : 'bg-emerald-50 dark:bg-emerald-950/60 border-2 border-emerald-500 text-emerald-900 dark:text-emerald-200 shadow-sm font-bold'
+                      : 'bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-slate-300 dark:hover:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 font-medium'
                   } ${isScanning ? 'opacity-50 cursor-not-allowed' : ''}`}
                 >
                   <img
                     src={sample.previewUrl}
                     alt={sample.title}
-                    className="w-5 h-5 rounded-full object-cover border border-slate-300 shadow-2xs shrink-0"
+                    className="w-5 h-5 rounded-full object-cover border border-slate-300 dark:border-slate-700 shadow-2xs shrink-0"
                   />
                   <span
                     className={`w-2 h-2 rounded-full ${
@@ -351,7 +351,7 @@ export const MediaScanner: React.FC<MediaScannerProps> = ({
                   />
                   <span>{sample.title}</span>
                   <span className={`px-1.5 py-0.5 rounded text-[10px] font-bold ${
-                    isDanger ? 'bg-rose-100 text-rose-700' : 'bg-emerald-100 text-emerald-700'
+                    isDanger ? 'bg-rose-100 dark:bg-rose-900/60 text-rose-700 dark:text-rose-300' : 'bg-emerald-100 dark:bg-emerald-900/60 text-emerald-700 dark:text-emerald-300'
                   }`}>
                     {sample.confidence}%
                   </span>
@@ -363,16 +363,16 @@ export const MediaScanner: React.FC<MediaScannerProps> = ({
 
         {/* Detection Engine Mode Selector Strip */}
         <div className="mb-6 flex flex-wrap items-center justify-center gap-3">
-          <div className="flex flex-wrap items-center justify-center gap-2 px-4 py-2 rounded-2xl bg-slate-100 border border-slate-200 text-xs font-mono shadow-xs">
-            <span className="text-slate-600 font-medium">Classifier Mode for Uploads:</span>
+          <div className="flex flex-wrap items-center justify-center gap-2 px-4 py-2 rounded-2xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs font-mono shadow-xs">
+            <span className="text-slate-600 dark:text-slate-400 font-medium">Classifier Mode for Uploads:</span>
             <div className="flex items-center gap-1.5">
               <button
                 type="button"
                 onClick={() => setDetectionMode('auto')}
                 className={`px-3 py-1.5 rounded-lg transition-all ${
                   detectionMode === 'auto'
-                    ? 'bg-blue-600 text-white font-bold shadow-xs'
-                    : 'text-slate-600 hover:text-slate-900 font-medium'
+                    ? 'bg-blue-600 dark:bg-cyan-600 text-white font-bold shadow-xs'
+                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white font-medium'
                 }`}
                 title="Automatically classifies camera/webcam portraits as Real Human and deepfakes as Fake"
               >
@@ -384,7 +384,7 @@ export const MediaScanner: React.FC<MediaScannerProps> = ({
                 className={`px-3 py-1.5 rounded-lg transition-all ${
                   detectionMode === 'human'
                     ? 'bg-emerald-600 text-white font-bold shadow-xs'
-                    : 'text-slate-600 hover:text-slate-900 font-medium'
+                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white font-medium'
                 }`}
                 title="Force classify uploaded media as Real Human"
               >
@@ -396,7 +396,7 @@ export const MediaScanner: React.FC<MediaScannerProps> = ({
                 className={`px-3 py-1.5 rounded-lg transition-all ${
                   detectionMode === 'deepfake'
                     ? 'bg-rose-600 text-white font-bold shadow-xs'
-                    : 'text-slate-600 hover:text-slate-900 font-medium'
+                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white font-medium'
                 }`}
                 title="Force classify uploaded media as Deepfake (Fake)"
               >
@@ -407,49 +407,49 @@ export const MediaScanner: React.FC<MediaScannerProps> = ({
         </div>
 
         {/* High-Precision Accuracy & Consensus HUD Bar */}
-        <div className="mb-6 rounded-2xl bg-gradient-to-r from-blue-50/90 via-indigo-50/80 to-cyan-50/90 border border-blue-200/90 p-4 shadow-sm">
+        <div className="mb-6 rounded-2xl bg-gradient-to-r from-blue-50/90 via-indigo-50/80 to-cyan-50/90 dark:from-slate-900 dark:via-slate-850 dark:to-slate-900 border border-blue-200/90 dark:border-slate-800 p-4 shadow-sm">
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div className="flex items-center gap-3.5">
-              <div className="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center shadow-md shadow-blue-600/20 shrink-0">
+              <div className="w-10 h-10 rounded-xl bg-blue-600 dark:bg-cyan-600 text-white flex items-center justify-center shadow-md shadow-blue-600/20 shrink-0">
                 <Award className="w-5 h-5" />
               </div>
               <div>
                 <div className="flex flex-wrap items-center gap-2">
-                  <span className="text-xs font-mono font-bold uppercase tracking-wider text-blue-950">
+                  <span className="text-xs font-mono font-bold uppercase tracking-wider text-blue-950 dark:text-cyan-300">
                     NIST FRVT Certified Accuracy
                   </span>
-                  <span className="px-2 py-0.5 rounded-full text-[11px] font-mono font-extrabold bg-blue-600 text-white shadow-2xs">
+                  <span className="px-2 py-0.5 rounded-full text-[11px] font-mono font-extrabold bg-blue-600 dark:bg-cyan-600 text-white shadow-2xs">
                     99.94% Precision
                   </span>
-                  <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-bold border border-emerald-200">
+                  <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 font-bold border border-emerald-200 dark:border-emerald-800/60">
                     5/5 Models Agree (100%)
                   </span>
                 </div>
-                <p className="text-[11px] font-mono text-slate-600 mt-0.5">
+                <p className="text-[11px] font-mono text-slate-600 dark:text-slate-400 mt-0.5">
                   Multi-Model Neural Consensus: ResNet-50 • EfficientNet-B4 • Nonlinear SVM • 2D DCT • Bayer CFA Sensor Noise
                 </p>
               </div>
             </div>
 
             <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-xs font-mono">
-              <div className="px-3 py-1.5 rounded-lg bg-white border border-blue-200/80 text-slate-700 shadow-2xs">
-                Margin: <strong className="text-blue-700 font-bold">±0.02%</strong>
+              <div className="px-3 py-1.5 rounded-lg bg-white dark:bg-slate-800 border border-blue-200/80 dark:border-slate-700 text-slate-700 dark:text-slate-300 shadow-2xs">
+                Margin: <strong className="text-blue-700 dark:text-cyan-400 font-bold">±0.02%</strong>
               </div>
-              <div className="px-3 py-1.5 rounded-lg bg-white border border-blue-200/80 text-slate-700 shadow-2xs">
-                ROC-AUC: <strong className="text-blue-700 font-bold">0.9992</strong>
+              <div className="px-3 py-1.5 rounded-lg bg-white dark:bg-slate-800 border border-blue-200/80 dark:border-slate-700 text-slate-700 dark:text-slate-300 shadow-2xs">
+                ROC-AUC: <strong className="text-blue-700 dark:text-cyan-400 font-bold">0.9992</strong>
               </div>
-              <div className="px-3 py-1.5 rounded-lg bg-white border border-blue-200/80 text-slate-700 shadow-2xs">
-                FAR: <strong className="text-emerald-700 font-bold">&lt;0.0008%</strong>
+              <div className="px-3 py-1.5 rounded-lg bg-white dark:bg-slate-800 border border-blue-200/80 dark:border-slate-700 text-slate-700 dark:text-slate-300 shadow-2xs">
+                FAR: <strong className="text-emerald-700 dark:text-emerald-400 font-bold">&lt;0.0008%</strong>
               </div>
-              <div className="px-3 py-1.5 rounded-lg bg-white border border-blue-200/80 text-slate-700 shadow-2xs hidden md:block">
-                Latency: <strong className="text-slate-900 font-bold">12ms</strong>
+              <div className="px-3 py-1.5 rounded-lg bg-white dark:bg-slate-800 border border-blue-200/80 dark:border-slate-700 text-slate-700 dark:text-slate-300 shadow-2xs hidden md:block">
+                Latency: <strong className="text-slate-900 dark:text-white font-bold">12ms</strong>
               </div>
             </div>
           </div>
         </div>
 
         {/* Main Scanner Panel Container */}
-        <div className="bg-white rounded-3xl p-5 sm:p-8 border border-slate-200/90 shadow-xl">
+        <div className="bg-white dark:bg-slate-900 rounded-3xl p-5 sm:p-8 border border-slate-200/90 dark:border-slate-800 shadow-xl">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
             
             {/* Left Column (7 Cols): Visual Inspection Viewport & Controls */}
@@ -721,9 +721,9 @@ export const MediaScanner: React.FC<MediaScannerProps> = ({
                 <button
                   disabled={isScanning}
                   onClick={() => fileInputRef.current?.click()}
-                  className="py-4 px-5 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold font-mono text-xs sm:text-sm flex items-center justify-center gap-2 border border-slate-200 transition-colors shrink-0"
+                  className="py-4 px-5 rounded-2xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 font-bold font-mono text-xs sm:text-sm flex items-center justify-center gap-2 border border-slate-200 dark:border-slate-700 transition-colors shrink-0"
                 >
-                  <UploadCloud className="w-4 h-4 text-blue-600" />
+                  <UploadCloud className="w-4 h-4 text-blue-600 dark:text-cyan-400" />
                   <span>Upload Custom File</span>
                 </button>
               </div>
@@ -739,8 +739,8 @@ export const MediaScanner: React.FC<MediaScannerProps> = ({
                 onClick={() => fileInputRef.current?.click()}
                 className={`border-2 border-dashed rounded-2xl p-5 flex items-center justify-center text-center cursor-pointer transition-all ${
                   isDragging
-                    ? 'border-blue-500 bg-blue-50/50 scale-[1.01]'
-                    : 'border-slate-300 bg-slate-50/60 hover:border-blue-400 hover:bg-blue-50/20'
+                    ? 'border-blue-500 bg-blue-50/50 dark:bg-blue-950/40 scale-[1.01]'
+                    : 'border-slate-300 dark:border-slate-700 bg-slate-50/60 dark:bg-slate-850/60 hover:border-blue-400 dark:hover:border-cyan-500 hover:bg-blue-50/20 dark:hover:bg-slate-800/40'
                 }`}
               >
                 <input
@@ -756,14 +756,14 @@ export const MediaScanner: React.FC<MediaScannerProps> = ({
                 />
 
                 <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-xl bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-600 shadow-xs shrink-0">
+                  <div className="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-800 flex items-center justify-center text-blue-600 dark:text-cyan-400 shadow-xs shrink-0">
                     <UploadCloud className="w-5 h-5" />
                   </div>
                   <div className="text-left">
-                    <div className="text-xs font-bold text-slate-900">
+                    <div className="text-xs font-bold text-slate-900 dark:text-white">
                       Drop an image or video to analyze
                     </div>
-                    <div className="text-[11px] text-slate-500">
+                    <div className="text-[11px] text-slate-500 dark:text-slate-400">
                       Supports JPG, PNG, MP4, MOV • Automatic SHA-256 Checksum & ELA Extraction
                     </div>
                   </div>
@@ -782,44 +782,44 @@ export const MediaScanner: React.FC<MediaScannerProps> = ({
             <div className="lg:col-span-5 flex flex-col justify-between gap-5">
               
               {/* Overall Multi-Stage Progress Card */}
-              <div className="rounded-2xl p-5 bg-slate-50 border border-slate-200 shadow-xs">
+              <div className="rounded-2xl p-5 bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-800 shadow-xs">
                 <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center gap-2">
-                    <Activity className="w-4 h-4 text-blue-600" />
-                    <span className="text-xs font-mono font-bold text-slate-800 uppercase tracking-wider">
+                    <Activity className="w-4 h-4 text-blue-600 dark:text-cyan-400" />
+                    <span className="text-xs font-mono font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wider">
                       Forensic Pipeline Progress
                     </span>
                   </div>
-                  <span className="font-mono font-bold text-sm text-blue-600">
+                  <span className="font-mono font-bold text-sm text-blue-600 dark:text-cyan-400">
                     {scanProgress}%
                   </span>
                 </div>
 
                 {/* Progress Bar Track */}
-                <div className="h-2.5 w-full bg-slate-200 rounded-full overflow-hidden mb-3">
+                <div className="h-2.5 w-full bg-slate-200 dark:bg-slate-750 rounded-full overflow-hidden mb-3">
                   <div
-                    className="h-full bg-gradient-to-r from-blue-600 via-indigo-600 to-sky-500 rounded-full transition-all duration-150"
+                    className="h-full bg-gradient-to-r from-blue-600 via-indigo-600 to-sky-500 dark:from-cyan-500 dark:via-blue-600 dark:to-indigo-500 rounded-full transition-all duration-150"
                     style={{ width: `${scanProgress}%` }}
                   />
                 </div>
 
                 {/* Live Stage Subtitle */}
-                <div className="p-3 rounded-xl bg-white border border-slate-200 shadow-2xs">
-                  <div className="text-[10px] font-mono font-semibold text-slate-400 uppercase">
+                <div className="p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-2xs">
+                  <div className="text-[10px] font-mono font-semibold text-slate-400 dark:text-slate-500 uppercase">
                     {isScanning ? 'CURRENT ACTIVE OPERATION' : 'PIPELINE STATUS'}
                   </div>
-                  <div className="font-display font-bold text-sm text-slate-900 mt-0.5">
+                  <div className="font-display font-bold text-sm text-slate-900 dark:text-white mt-0.5">
                     {isScanning ? (
                       <span>Stage {activeStageIndex + 1} of 5: {currentStageObj.label}</span>
                     ) : hasScanned ? (
-                      <span className={isManipulated ? 'text-rose-600' : 'text-emerald-700'}>
+                      <span className={isManipulated ? 'text-rose-600 dark:text-rose-400' : 'text-emerald-700 dark:text-emerald-400'}>
                         Analysis Complete — {selectedSample.result}
                       </span>
                     ) : (
                       <span>Asset Ingested — Ready to Analyze</span>
                     )}
                   </div>
-                  <p className="text-xs text-slate-600 mt-1 leading-relaxed">
+                  <p className="text-xs text-slate-600 dark:text-slate-300 mt-1 leading-relaxed">
                     {isScanning
                       ? currentStageObj.description
                       : hasScanned
@@ -832,10 +832,10 @@ export const MediaScanner: React.FC<MediaScannerProps> = ({
               </div>
 
               {/* 5-Stage Step-by-Step Breakdown Cards */}
-              <div className="rounded-2xl p-5 bg-white border border-slate-200 shadow-xs space-y-2.5">
-                <div className="text-xs font-mono font-bold text-slate-800 uppercase tracking-wider mb-2 flex items-center justify-between">
+              <div className="rounded-2xl p-5 bg-white dark:bg-slate-850 border border-slate-200 dark:border-slate-800 shadow-xs space-y-2.5">
+                <div className="text-xs font-mono font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wider mb-2 flex items-center justify-between">
                   <span>How the Image Is Being Analyzed</span>
-                  <span className="text-[10px] font-mono text-slate-500">5 MULTI-VECTOR STAGES</span>
+                  <span className="text-[10px] font-mono text-slate-500 dark:text-slate-400">5 MULTI-VECTOR STAGES</span>
                 </div>
 
                 {FORENSIC_STAGES.map((stage, idx) => {
@@ -847,10 +847,10 @@ export const MediaScanner: React.FC<MediaScannerProps> = ({
                       key={stage.id}
                       className={`p-3 rounded-xl border text-xs font-mono transition-all ${
                         isActive
-                          ? 'bg-blue-50/90 border-2 border-blue-500 shadow-sm'
+                          ? 'bg-blue-50/90 dark:bg-blue-950/70 border-2 border-blue-500 dark:border-cyan-400 shadow-sm'
                           : isDone
-                          ? 'bg-slate-50/80 border-slate-200 text-slate-800'
-                          : 'bg-slate-50/30 border-slate-100 text-slate-400'
+                          ? 'bg-slate-50/80 dark:bg-slate-800/80 border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200'
+                          : 'bg-slate-50/30 dark:bg-slate-900/40 border-slate-100 dark:border-slate-800/60 text-slate-400 dark:text-slate-500'
                       }`}
                     >
                       <div className="flex items-center justify-between gap-2 mb-1">
@@ -859,36 +859,36 @@ export const MediaScanner: React.FC<MediaScannerProps> = ({
                             isActive
                               ? 'bg-blue-600 text-white'
                               : isDone
-                              ? 'bg-emerald-100 text-emerald-800'
-                              : 'bg-slate-200 text-slate-500'
+                              ? 'bg-emerald-100 dark:bg-emerald-950/70 text-emerald-800 dark:text-emerald-300'
+                              : 'bg-slate-200 dark:bg-slate-800 text-slate-500 dark:text-slate-400'
                           }`}>
                             {stage.stepNum}
                           </span>
-                          <span className="font-bold text-slate-900">{stage.label}</span>
+                          <span className="font-bold text-slate-900 dark:text-white">{stage.label}</span>
                         </div>
 
                         {/* Status Badge */}
                         <div className="shrink-0">
                           {isActive ? (
-                            <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-blue-100 text-blue-700 text-[10px] font-bold animate-pulse">
-                              <span className="w-1.5 h-1.5 rounded-full bg-blue-600 animate-ping" />
+                            <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-blue-100 dark:bg-cyan-950/70 text-blue-700 dark:text-cyan-300 text-[10px] font-bold animate-pulse">
+                              <span className="w-1.5 h-1.5 rounded-full bg-blue-600 dark:bg-cyan-400 animate-ping" />
                               ANALYZING...
                             </span>
                           ) : isDone ? (
-                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-bold">
-                              <CheckCircle2 className="w-3 h-3 text-emerald-600" />
+                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950/70 text-emerald-800 dark:text-emerald-300 text-[10px] font-bold">
+                              <CheckCircle2 className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />
                               VERIFIED
                             </span>
                           ) : (
-                            <span className="px-2 py-0.5 rounded text-[10px] text-slate-400">
+                            <span className="px-2 py-0.5 rounded text-[10px] text-slate-400 dark:text-slate-500">
                               WAITING
                             </span>
                           )}
                         </div>
                       </div>
 
-                      <div className="text-[11px] text-slate-600 pl-7 leading-tight">
-                        <span className="font-semibold text-slate-700">{stage.technique}: </span>
+                      <div className="text-[11px] text-slate-600 dark:text-slate-300 pl-7 leading-tight">
+                        <span className="font-semibold text-slate-700 dark:text-slate-200">{stage.technique}: </span>
                         {stage.whatItAnalyzes}
                       </div>
                     </div>
@@ -901,7 +901,7 @@ export const MediaScanner: React.FC<MediaScannerProps> = ({
 
               {/* Jump to Deep-Dive Report Link */}
               <div className="flex items-center justify-between pt-1">
-                <span className="text-xs font-mono text-slate-500">
+                <span className="text-xs font-mono text-slate-500 dark:text-slate-400">
                   Detailed mathematical metrics & ELA heatmap below
                 </span>
                 <button
@@ -915,7 +915,7 @@ export const MediaScanner: React.FC<MediaScannerProps> = ({
                       if (el) el.scrollIntoView({ behavior: 'smooth' });
                     }
                   }}
-                  className="inline-flex items-center gap-1.5 text-xs font-semibold text-blue-600 hover:text-blue-700 hover:underline transition-colors"
+                  className="inline-flex items-center gap-1.5 text-xs font-semibold text-blue-600 dark:text-cyan-400 hover:text-blue-700 dark:hover:text-cyan-300 hover:underline transition-colors"
                 >
                   <span>Explore Deep-Dive Report</span>
                   <Eye className="w-3.5 h-3.5" />

@@ -43,24 +43,24 @@ export const CustomerStories: React.FC = () => {
   ];
 
   return (
-    <section id="case-studies" className="py-12 md:py-16 relative overflow-hidden bg-white border-b border-slate-200/80">
+    <section id="case-studies" className="py-12 md:py-16 relative overflow-hidden bg-white dark:bg-slate-950 border-b border-slate-200/80 dark:border-slate-800/80 transition-colors duration-300">
       {/* Subtle ambient lighting */}
-      <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-96 h-96 bg-blue-50/50 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-96 h-96 bg-blue-50/50 dark:bg-blue-600/10 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Header */}
         <div className="flex flex-col items-center text-center mb-8">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-50 border border-blue-200 text-xs font-mono font-semibold text-blue-700 mb-3 shadow-xs">
-            <Award className="w-3.5 h-3.5 text-blue-600" />
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-50 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-800/60 text-xs font-mono font-semibold text-blue-700 dark:text-cyan-400 mb-3 shadow-xs">
+            <Award className="w-3.5 h-3.5 text-blue-600 dark:text-cyan-400" />
             <span>FIELD PROVEN IN HIGH-STAKES OPERATIONS</span>
           </div>
 
-          <h2 className="font-display font-bold text-3xl sm:text-4xl text-slate-900 tracking-tight mb-3">
+          <h2 className="font-display font-bold text-3xl sm:text-4xl text-slate-900 dark:text-white tracking-tight mb-3">
             Tested Under Adversarial Pressure.
           </h2>
 
-          <p className="text-sm sm:text-base text-slate-600 max-w-2xl">
+          <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 max-w-2xl">
             See how sovereign defense agencies, international broadcasters, and financial institutions 
             rely on DeepGuard AI to neutralize generative deception in real time.
           </p>
@@ -72,55 +72,55 @@ export const CustomerStories: React.FC = () => {
             <div
               key={story.institution}
               onMouseEnter={() => sounds.playBlip()}
-              className="group rounded-3xl bg-white border border-slate-200 hover:border-blue-400 p-8 flex flex-col justify-between shadow-sm hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-300 relative overflow-hidden"
+              className="group rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-blue-400 dark:hover:border-cyan-500/50 p-8 flex flex-col justify-between shadow-sm hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-300 relative overflow-hidden"
             >
               {/* Top Sector Badge & Impact Metric */}
               <div>
                 <div className="flex items-center justify-between gap-2 mb-6">
-                  <span className={`px-2.5 py-1 rounded-md text-[10px] font-mono font-bold border ${story.tagColor}`}>
+                  <span className={`px-2.5 py-1 rounded-md text-[10px] font-mono font-bold border ${story.tagColor} dark:bg-slate-800 dark:border-slate-700`}>
                     {story.sector}
                   </span>
 
-                  <div className="flex items-center gap-1.5 text-emerald-600 text-xs font-mono font-semibold">
+                  <div className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400 text-xs font-mono font-semibold">
                     <ShieldCheck className="w-4 h-4 shrink-0" />
                     <span className="truncate">{story.verified}</span>
                   </div>
                 </div>
 
                 {/* Big Metric Callout */}
-                <div className="mb-5 pb-5 border-b border-slate-100">
-                  <div className="font-display font-extrabold text-4xl text-slate-900 group-hover:text-blue-600 transition-colors">
+                <div className="mb-5 pb-5 border-b border-slate-100 dark:border-slate-800">
+                  <div className="font-display font-extrabold text-4xl text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-cyan-400 transition-colors">
                     {story.metric}
                   </div>
-                  <div className="text-xs font-mono text-slate-500 uppercase tracking-wider mt-1">
+                  <div className="text-xs font-mono text-slate-500 dark:text-slate-400 uppercase tracking-wider mt-1">
                     {story.metricLabel}
                   </div>
                 </div>
 
                 {/* Headline */}
-                <h3 className="font-display font-bold text-lg text-slate-900 mb-3 group-hover:text-blue-600 transition-colors">
+                <h3 className="font-display font-bold text-lg text-slate-900 dark:text-white mb-3 group-hover:text-blue-600 dark:group-hover:text-cyan-400 transition-colors">
                   {story.headline}
                 </h3>
 
                 {/* Quote */}
-                <div className="relative pl-5 text-sm text-slate-600 leading-relaxed mb-6 italic">
-                  <Quote className="w-4 h-4 text-slate-300 absolute left-0 top-0.5" />
+                <div className="relative pl-5 text-sm text-slate-600 dark:text-slate-300 leading-relaxed mb-6 italic">
+                  <Quote className="w-4 h-4 text-slate-300 dark:text-slate-600 absolute left-0 top-0.5" />
                   "{story.quote}"
                 </div>
               </div>
 
               {/* Author / Institution Footer */}
-              <div className="pt-4 border-t border-slate-100 flex items-center justify-between">
+              <div className="pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
                 <div>
-                  <div className="font-semibold text-xs text-slate-900">
+                  <div className="font-semibold text-xs text-slate-900 dark:text-white">
                     {story.institution}
                   </div>
-                  <div className="text-[11px] font-mono text-slate-500">
+                  <div className="text-[11px] font-mono text-slate-500 dark:text-slate-400">
                     {story.officer}
                   </div>
                 </div>
 
-                <div className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 group-hover:bg-blue-50 group-hover:text-blue-600 transition-colors">
+                <div className="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-400 dark:text-slate-300 group-hover:bg-blue-50 dark:group-hover:bg-cyan-950/40 group-hover:text-blue-600 dark:group-hover:text-cyan-400 transition-colors">
                   <ArrowUpRight className="w-4 h-4" />
                 </div>
               </div>
@@ -129,25 +129,25 @@ export const CustomerStories: React.FC = () => {
         </div>
 
         {/* Quantified Defense Strip */}
-        <div className="mt-12 p-6 rounded-2xl bg-slate-50 border border-slate-200 flex flex-wrap items-center justify-around gap-6 text-center">
+        <div className="mt-12 p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex flex-wrap items-center justify-around gap-6 text-center">
           <div>
-            <div className="font-display font-bold text-2xl sm:text-3xl text-slate-900">100%</div>
-            <div className="text-xs font-mono text-slate-500">Mathematical Explainability</div>
+            <div className="font-display font-bold text-2xl sm:text-3xl text-slate-900 dark:text-white">100%</div>
+            <div className="text-xs font-mono text-slate-500 dark:text-slate-400">Mathematical Explainability</div>
           </div>
-          <div className="h-8 w-px bg-slate-200 hidden sm:block" />
+          <div className="h-8 w-px bg-slate-200 dark:bg-slate-800 hidden sm:block" />
           <div>
-            <div className="font-display font-bold text-2xl sm:text-3xl text-blue-600">0.02%</div>
-            <div className="text-xs font-mono text-slate-500">Industry-Low False Positive Rate</div>
+            <div className="font-display font-bold text-2xl sm:text-3xl text-blue-600 dark:text-cyan-400">0.02%</div>
+            <div className="text-xs font-mono text-slate-500 dark:text-slate-400">Industry-Low False Positive Rate</div>
           </div>
-          <div className="h-8 w-px bg-slate-200 hidden sm:block" />
+          <div className="h-8 w-px bg-slate-200 dark:bg-slate-800 hidden sm:block" />
           <div>
-            <div className="font-display font-bold text-2xl sm:text-3xl text-indigo-600">&lt; 250ms</div>
-            <div className="text-xs font-mono text-slate-500">End-to-End API Latency</div>
+            <div className="font-display font-bold text-2xl sm:text-3xl text-indigo-600 dark:text-indigo-400">&lt; 250ms</div>
+            <div className="text-xs font-mono text-slate-500 dark:text-slate-400">End-to-End API Latency</div>
           </div>
-          <div className="h-8 w-px bg-slate-200 hidden sm:block" />
+          <div className="h-8 w-px bg-slate-200 dark:bg-slate-800 hidden sm:block" />
           <div>
-            <div className="font-display font-bold text-2xl sm:text-3xl text-emerald-600">32 Regions</div>
-            <div className="text-xs font-mono text-slate-500">Global Edge Nodes</div>
+            <div className="font-display font-bold text-2xl sm:text-3xl text-emerald-600 dark:text-emerald-400">32 Regions</div>
+            <div className="text-xs font-mono text-slate-500 dark:text-slate-400">Global Edge Nodes</div>
           </div>
         </div>
 

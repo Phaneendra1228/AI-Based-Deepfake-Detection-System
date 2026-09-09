@@ -32,34 +32,34 @@ export const DashboardPreview: React.FC = () => {
   ];
 
   return (
-    <section id="dashboard" className="py-12 md:py-16 relative overflow-hidden bg-white border-b border-slate-200/80">
+    <section id="dashboard" className="py-12 md:py-16 relative overflow-hidden bg-white dark:bg-[#060913] border-b border-slate-200/80 dark:border-slate-800/80 transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Header */}
         <div className="flex flex-col items-center text-center mb-8">
           <div className="flex items-center gap-2 mb-3">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-50 border border-blue-200 text-xs font-mono font-semibold text-blue-700 shadow-xs">
-              <BarChart3 className="w-3.5 h-3.5 text-blue-600" />
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-800 text-xs font-mono font-semibold text-blue-700 dark:text-cyan-300 shadow-xs">
+              <BarChart3 className="w-3.5 h-3.5 text-blue-600 dark:text-cyan-400" />
               <span>ENTERPRISE FORENSIC DASHBOARD</span>
             </div>
             <div
               className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-mono font-semibold border shadow-xs ${
                 isLiveDb
-                  ? 'bg-emerald-50 border-emerald-200 text-emerald-700'
-                  : 'bg-slate-100 border-slate-200 text-slate-600'
+                  ? 'bg-emerald-50 dark:bg-emerald-950/60 border-emerald-200 dark:border-emerald-800 text-emerald-700 dark:text-emerald-400'
+                  : 'bg-slate-100 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300'
               }`}
             >
-              <Database className="w-3.5 h-3.5 text-emerald-600" />
+              <Database className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
               <span>{isLiveDb ? 'MongoDB Cluster Synchronized' : 'MongoDB Cluster Ready'}</span>
               <span className={`w-1.5 h-1.5 rounded-full ${isLiveDb ? 'bg-emerald-500 animate-pulse' : 'bg-slate-400'}`} />
             </div>
           </div>
 
-          <h2 className="font-display font-bold text-3xl sm:text-4xl text-slate-900 tracking-tight mb-3">
+          <h2 className="font-display font-bold text-3xl sm:text-4xl text-slate-900 dark:text-white tracking-tight mb-3">
             Your Media. Under the Microscope.
           </h2>
 
-          <p className="text-sm sm:text-base text-slate-600 max-w-2xl">
+          <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 max-w-2xl">
             Real-time fleet telemetry, multi-camera stream audits, and threat frequency monitoring 
             for cyber defense command centers.
           </p>
@@ -72,20 +72,20 @@ export const DashboardPreview: React.FC = () => {
             return (
               <div
                 key={kpi.label}
-                className="bg-slate-50 border border-slate-200 rounded-2xl p-5 flex flex-col justify-between shadow-xs"
+                className="bg-slate-50 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 flex flex-col justify-between shadow-xs hover:border-blue-300 dark:hover:border-cyan-500/50 transition-colors"
               >
                 <div className="flex items-center justify-between mb-3">
-                  <span className="text-xs font-mono text-slate-500 font-medium">{kpi.label}</span>
-                  <div className={`p-2 rounded-lg bg-white border border-slate-200 shadow-2xs ${kpi.color}`}>
+                  <span className="text-xs font-mono text-slate-500 dark:text-slate-400 font-medium">{kpi.label}</span>
+                  <div className={`p-2 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-2xs ${kpi.color}`}>
                     <Icon className="w-4 h-4" />
                   </div>
                 </div>
 
                 <div>
-                  <div className="font-display font-bold text-2xl sm:text-3xl text-slate-900 mb-1">
+                  <div className="font-display font-bold text-2xl sm:text-3xl text-slate-900 dark:text-white mb-1">
                     {kpi.value}
                   </div>
-                  <div className="text-[11px] font-mono text-slate-500">{kpi.sub}</div>
+                  <div className="text-[11px] font-mono text-slate-500 dark:text-slate-400">{kpi.sub}</div>
                 </div>
               </div>
             );
@@ -96,15 +96,15 @@ export const DashboardPreview: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-8">
           
           {/* Main Throughput Chart (SVG) */}
-          <div className="lg:col-span-8 bg-slate-50 border border-slate-200 rounded-2xl p-6 shadow-xs">
-            <div className="flex items-center justify-between border-b border-slate-200 pb-4 mb-4">
+          <div className="lg:col-span-8 bg-slate-50 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-xs">
+            <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-4 mb-4">
               <div>
-                <h4 className="font-display font-bold text-sm text-slate-900">
+                <h4 className="font-display font-bold text-sm text-slate-900 dark:text-white">
                   24-Hour Forensic Ingestion Volume
                 </h4>
-                <p className="text-xs font-mono text-slate-500">Throughput peak: 8,450 scans/hr</p>
+                <p className="text-xs font-mono text-slate-500 dark:text-slate-400">Throughput peak: 8,450 scans/hr</p>
               </div>
-              <span className="text-[10px] font-mono font-bold px-2.5 py-1 rounded-md bg-blue-100 border border-blue-200 text-blue-700">
+              <span className="text-[10px] font-mono font-bold px-2.5 py-1 rounded-md bg-blue-100 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-800 text-blue-700 dark:text-cyan-300">
                 REAL-TIME STREAM
               </span>
             </div>
@@ -161,57 +161,57 @@ export const DashboardPreview: React.FC = () => {
           </div>
 
           {/* Anomaly Distribution */}
-          <div className="lg:col-span-4 bg-slate-50 border border-slate-200 rounded-2xl p-6 shadow-xs flex flex-col justify-between">
+          <div className="lg:col-span-4 bg-slate-50 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-xs flex flex-col justify-between">
             <div>
-              <div className="flex items-center justify-between border-b border-slate-200 pb-4 mb-4">
-                <h4 className="font-display font-bold text-sm text-slate-900">Manipulation Modality</h4>
-                <span className="text-[10px] font-mono text-slate-500 font-medium">LAST 30 DAYS</span>
+              <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-4 mb-4">
+                <h4 className="font-display font-bold text-sm text-slate-900 dark:text-white">Manipulation Modality</h4>
+                <span className="text-[10px] font-mono text-slate-500 dark:text-slate-400 font-medium">LAST 30 DAYS</span>
               </div>
 
               <div className="space-y-3.5">
                 <div>
                   <div className="flex justify-between text-xs font-mono mb-1">
-                    <span className="text-slate-700 font-medium">Face-Swap (Autoencoder)</span>
-                    <span className="text-rose-600 font-bold">52.4%</span>
+                    <span className="text-slate-700 dark:text-slate-300 font-medium">Face-Swap (Autoencoder)</span>
+                    <span className="text-rose-600 dark:text-rose-400 font-bold">52.4%</span>
                   </div>
-                  <div className="h-2 w-full bg-slate-200 rounded-full overflow-hidden">
+                  <div className="h-2 w-full bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
                     <div className="h-full bg-rose-600 rounded-full" style={{ width: '52.4%' }} />
                   </div>
                 </div>
 
                 <div>
                   <div className="flex justify-between text-xs font-mono mb-1">
-                    <span className="text-slate-700 font-medium">Diffusion Synthesis (GAN/SDXL)</span>
-                    <span className="text-indigo-600 font-bold">28.1%</span>
+                    <span className="text-slate-700 dark:text-slate-300 font-medium">Diffusion Synthesis (GAN/SDXL)</span>
+                    <span className="text-indigo-600 dark:text-indigo-400 font-bold">28.1%</span>
                   </div>
-                  <div className="h-2 w-full bg-slate-200 rounded-full overflow-hidden">
+                  <div className="h-2 w-full bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
                     <div className="h-full bg-indigo-600 rounded-full" style={{ width: '28.1%' }} />
                   </div>
                 </div>
 
                 <div>
                   <div className="flex justify-between text-xs font-mono mb-1">
-                    <span className="text-slate-700 font-medium">Audio/Lip-Sync Desynchrony</span>
-                    <span className="text-amber-600 font-bold">14.3%</span>
+                    <span className="text-slate-700 dark:text-slate-300 font-medium">Audio/Lip-Sync Desynchrony</span>
+                    <span className="text-amber-600 dark:text-amber-400 font-bold">14.3%</span>
                   </div>
-                  <div className="h-2 w-full bg-slate-200 rounded-full overflow-hidden">
+                  <div className="h-2 w-full bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
                     <div className="h-full bg-amber-500 rounded-full" style={{ width: '14.3%' }} />
                   </div>
                 </div>
 
                 <div>
                   <div className="flex justify-between text-xs font-mono mb-1">
-                    <span className="text-slate-700 font-medium">Adversarial Noise Injections</span>
-                    <span className="text-blue-600 font-bold">5.2%</span>
+                    <span className="text-slate-700 dark:text-slate-300 font-medium">Adversarial Noise Injections</span>
+                    <span className="text-blue-600 dark:text-cyan-400 font-bold">5.2%</span>
                   </div>
-                  <div className="h-2 w-full bg-slate-200 rounded-full overflow-hidden">
+                  <div className="h-2 w-full bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
                     <div className="h-full bg-blue-500 rounded-full" style={{ width: '5.2%' }} />
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="pt-4 border-t border-slate-200 text-[11px] font-mono text-slate-500">
+            <div className="pt-4 border-t border-slate-200 dark:border-slate-800 text-[11px] font-mono text-slate-500 dark:text-slate-400">
               Distribution calculated across flagged assets.
             </div>
           </div>
