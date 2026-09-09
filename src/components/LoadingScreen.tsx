@@ -29,7 +29,9 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
   ]);
 
   const onCompleteRef = useRef(onComplete);
-  onCompleteRef.current = onComplete;
+  useEffect(() => {
+    onCompleteRef.current = onComplete;
+  }, [onComplete]);
 
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const exitTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);

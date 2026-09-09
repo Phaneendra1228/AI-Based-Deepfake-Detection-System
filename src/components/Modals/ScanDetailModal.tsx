@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import type { RecentScan } from '../../types';
-import { X, ShieldCheck, ShieldAlert, AlertTriangle, FileText, CheckCircle2, Lock } from 'lucide-react';
+import { X, ShieldCheck, ShieldAlert, CheckCircle2, AlertTriangle, Lock } from 'lucide-react';
 import { sounds } from '../../utils/soundEffects';
 
 interface ScanDetailModalProps {
@@ -9,7 +10,28 @@ interface ScanDetailModalProps {
 }
 
 export const ScanDetailModal: React.FC<ScanDetailModalProps> = ({ scan, onClose }) => {
-  if (!scan) return null;
+  useEffect(() => {
+    if (!scan) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+
+    // Lock body scroll while modal is open
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = originalOverflow;
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [scan, onClose]);
+
+  if (!scan || typeof document === 'undefined') return null;
 
   const isManipulated = scan.result === 'DEEPFAKE (FAKE)';
   const isReview = scan.result === 'REVIEW REQUIRED';
@@ -19,13 +41,22 @@ export const ScanDetailModal: React.FC<ScanDetailModalProps> = ({ scan, onClose 
     onClose();
   };
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-md animate-fadeIn">
-      <div className="relative w-full max-w-2xl rounded-3xl bg-white border border-slate-200 shadow-2xl p-6 sm:p-8 text-slate-800">
-        
+  const modalContent = (
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modal-title"
+      className="fixed inset-0 z-[99999] flex items-center justify-center p-4 sm:p-6 bg-slate-950/70 backdrop-blur-md overflow-y-auto"
+      onClick={handleClose}
+    >
+      <div
+        className="relative w-full max-w-2xl my-auto rounded-3xl bg-white border border-slate-200 shadow-2xl p-6 sm:p-8 text-slate-800 max-h-[90vh] overflow-y-auto"
+        onClick={(e) => e.stopPropagation()}
+      >
         {/* Close Button */}
         <button
           onClick={handleClose}
+          aria-label="Close modal"
           className="absolute top-4 right-4 p-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-900 transition-colors"
         >
           <X className="w-5 h-5" />
@@ -52,7 +83,7 @@ export const ScanDetailModal: React.FC<ScanDetailModalProps> = ({ scan, onClose 
                 {scan.fileType}
               </span>
             </div>
-            <h3 className="font-display font-bold text-xl text-slate-900 mt-0.5">
+            <h3 id="modal-title" className="font-display font-bold text-xl text-slate-900 mt-0.5">
               {scan.filename}
             </h3>
           </div>
@@ -104,27 +135,33 @@ export const ScanDetailModal: React.FC<ScanDetailModalProps> = ({ scan, onClose 
             Forensic Flags & Observations
           </h4>
           <div className="space-y-2">
-            {scan.flags.map((flag, i) => (
-              <div
-                key={i}
-                className="flex items-center gap-2.5 p-3 rounded-xl bg-slate-50 border border-slate-200 text-xs font-mono text-slate-700 shadow-2xs"
-              >
-                {isManipulated ? (
-                  <AlertTriangle className="w-4 h-4 text-rose-600 shrink-0" />
-                ) : (
-                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                )}
-                <span>{flag}</span>
+            {scan.flags && scan.flags.length > 0 ? (
+              scan.flags.map((flag, i) => (
+                <div
+                  key={i}
+                  className="flex items-center gap-2.5 p-3 rounded-xl bg-slate-50 border border-slate-200 text-xs font-mono text-slate-700 shadow-2xs"
+                >
+                  {isManipulated ? (
+                    <AlertTriangle className="w-4 h-4 text-rose-600 shrink-0" />
+                  ) : (
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                  )}
+                  <span>{flag}</span>
+                </div>
+              ))
+            ) : (
+              <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 text-xs font-mono text-slate-600">
+                No active anomalies flagged.
               </div>
-            ))}
+            )}
           </div>
         </div>
 
         {/* Cryptographic Chain of Custody */}
         <div className="p-3.5 rounded-xl bg-slate-100 border border-slate-200 text-xs font-mono text-slate-600 flex items-center justify-between mb-6 shadow-2xs">
           <div className="flex items-center gap-2">
-            <Lock className="w-4 h-4 text-blue-600" />
-            <span className="truncate">SHA-256: 7f83b1657ff1fc53b92dc18148a1d65dfc2d4b1f...</span>
+            <Lock className="w-4 h-4 text-blue-600 shrink-0" />
+            <span className="truncate text-[11px] sm:text-xs">SHA-256: 7f83b1657ff1fc53b92dc18148a1d65dfc2d4b1f...</span>
           </div>
           <span className="text-blue-700 font-bold ml-2 shrink-0">IMMUTABLE</span>
         </div>
@@ -143,13 +180,14 @@ export const ScanDetailModal: React.FC<ScanDetailModalProps> = ({ scan, onClose 
               alert(`Full evidentiary package exported for ${scan.filename}`);
               handleClose();
             }}
-            className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs font-mono shadow-md shadow-blue-600/20 transition-transform hover:scale-105"
+            className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs font-mono shadow-md shadow-blue-600/20 transition-transform hover:scale-105 active:scale-95"
           >
             Download Chain of Custody
           </button>
         </div>
-
       </div>
     </div>
   );
+
+  return createPortal(modalContent, document.body);
 };

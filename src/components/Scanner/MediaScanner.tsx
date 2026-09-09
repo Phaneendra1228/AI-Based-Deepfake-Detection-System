@@ -153,7 +153,7 @@ export const MediaScanner: React.FC<MediaScannerProps> = ({
     }
   }, [autoTriggerCount]);
 
-  const runSimulation = (sample: MediaSample) => {
+  function runSimulation(sample: MediaSample) {
     if (scanIntervalRef.current) {
       clearInterval(scanIntervalRef.current);
     }

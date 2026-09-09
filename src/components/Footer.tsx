@@ -1,16 +1,20 @@
 import React from 'react';
 import { Shield, Cpu } from 'lucide-react';
 import { sounds } from '../utils/soundEffects';
+import type { PageId } from './PagePagination';
 
 interface FooterProps {
+  onNavigate?: (page: PageId) => void;
   onRebootBootScreen?: () => void;
 }
 
-export const Footer: React.FC<FooterProps> = ({ onRebootBootScreen }) => {
-  const handleLinkClick = (href: string) => {
+export const Footer: React.FC<FooterProps> = ({ onNavigate, onRebootBootScreen }) => {
+  const handlePageNav = (pageId: PageId) => {
     sounds.playBlip();
-    const el = document.querySelector(href);
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
+    if (onNavigate) {
+      onNavigate(pageId);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   };
 
   return (
@@ -22,15 +26,18 @@ export const Footer: React.FC<FooterProps> = ({ onRebootBootScreen }) => {
           
           {/* Brand Info */}
           <div className="md:col-span-5 flex flex-col items-start">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="relative flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-200 p-2 shadow-xs">
+            <button
+              onClick={() => handlePageNav('home')}
+              className="flex items-center gap-3 mb-4 text-left group"
+            >
+              <div className="relative flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-200 p-2 shadow-xs group-hover:scale-105 transition-transform">
                 <Shield className="w-5 h-5 text-blue-600" />
                 <Cpu className="w-2.5 h-2.5 text-indigo-600 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
               </div>
-              <span className="font-display font-bold text-xl tracking-tight text-slate-900">
+              <span className="font-display font-bold text-xl tracking-tight text-slate-900 group-hover:text-blue-600 transition-colors">
                 DeepGuard <span className="text-blue-600">AI</span>
               </span>
-            </div>
+            </button>
 
             <p className="text-slate-600 text-sm max-w-sm mb-6 leading-relaxed">
               AI-powered media authenticity analysis. Advancing digital forensics, biometric verification, 
@@ -61,29 +68,29 @@ export const Footer: React.FC<FooterProps> = ({ onRebootBootScreen }) => {
           {/* Links Columns */}
           <div className="md:col-span-7 grid grid-cols-2 sm:grid-cols-3 gap-8">
             
-            {/* Column 1: System */}
+            {/* Column 1: Architecture */}
             <div>
               <h4 className="font-mono text-xs font-bold text-slate-900 uppercase tracking-wider mb-4">
                 Architecture
               </h4>
               <ul className="space-y-2.5 text-xs font-mono text-slate-600">
                 <li>
-                  <button onClick={() => handleLinkClick('#hero')} className="hover:text-blue-600 transition-colors">
+                  <button onClick={() => handlePageNav('home')} className="hover:text-blue-600 transition-colors">
                     Product Core
                   </button>
                 </li>
                 <li>
-                  <button onClick={() => handleLinkClick('#how-it-works')} className="hover:text-blue-600 transition-colors">
+                  <button onClick={() => handlePageNav('technology')} className="hover:text-blue-600 transition-colors">
                     How It Works
                   </button>
                 </li>
                 <li>
-                  <button onClick={() => handleLinkClick('#technology')} className="hover:text-blue-600 transition-colors">
+                  <button onClick={() => handlePageNav('technology')} className="hover:text-blue-600 transition-colors">
                     Technology & Models
                   </button>
                 </li>
                 <li>
-                  <button onClick={() => handleLinkClick('#scanner')} className="hover:text-blue-600 transition-colors">
+                  <button onClick={() => handlePageNav('scanner')} className="hover:text-blue-600 transition-colors">
                     Media Scanner
                   </button>
                 </li>
@@ -97,23 +104,23 @@ export const Footer: React.FC<FooterProps> = ({ onRebootBootScreen }) => {
               </h4>
               <ul className="space-y-2.5 text-xs font-mono text-slate-600">
                 <li>
-                  <button onClick={() => handleLinkClick('#applications')} className="hover:text-blue-600 transition-colors">
+                  <button onClick={() => handlePageNav('applications')} className="hover:text-blue-600 transition-colors">
                     Applications
                   </button>
                 </li>
                 <li>
-                  <button onClick={() => handleLinkClick('#dashboard')} className="hover:text-blue-600 transition-colors">
+                  <button onClick={() => handlePageNav('dashboard')} className="hover:text-blue-600 transition-colors">
                     Cyber Dashboard
                   </button>
                 </li>
                 <li>
-                  <button onClick={() => handleLinkClick('#security')} className="hover:text-blue-600 transition-colors">
-                    Security & Trust
+                  <button onClick={() => handlePageNav('case-studies')} className="hover:text-blue-600 transition-colors">
+                    Case Studies
                   </button>
                 </li>
                 <li>
-                  <button onClick={() => handleLinkClick('#roadmap')} className="hover:text-blue-600 transition-colors">
-                    Future Roadmap
+                  <button onClick={() => handlePageNav('forensics')} className="hover:text-blue-600 transition-colors">
+                    Forensic Dossier
                   </button>
                 </li>
               </ul>
@@ -126,19 +133,19 @@ export const Footer: React.FC<FooterProps> = ({ onRebootBootScreen }) => {
               </h4>
               <ul className="space-y-2.5 text-xs font-mono text-slate-600">
                 <li>
-                  <a href="#security" className="hover:text-blue-600 transition-colors">
-                    Privacy Policy
-                  </a>
+                  <button onClick={() => handlePageNav('home')} className="hover:text-blue-600 transition-colors">
+                    Security & Trust
+                  </button>
                 </li>
                 <li>
-                  <a href="#security" className="hover:text-blue-600 transition-colors">
+                  <button onClick={() => handlePageNav('home')} className="hover:text-blue-600 transition-colors">
                     Zero-Retention Policy
-                  </a>
+                  </button>
                 </li>
                 <li>
-                  <a href="#report" className="hover:text-blue-600 transition-colors">
+                  <button onClick={() => handlePageNav('forensics')} className="hover:text-blue-600 transition-colors">
                     Explainable AI
-                  </a>
+                  </button>
                 </li>
                 <li>
                   <a href="mailto:forensics@deepguard.ai" className="hover:text-blue-600 transition-colors">

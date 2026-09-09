@@ -18,6 +18,7 @@ import { CustomerStories } from './components/CustomerStories';
 import { DashboardPreview } from './components/Dashboard/DashboardPreview';
 import { WhyDeepGuard } from './components/WhyDeepGuard';
 import { CTASection } from './components/CTASection';
+import { FloatingQuickNav } from './components/FloatingQuickNav';
 import { Footer } from './components/Footer';
 import { PAGES_LIST, type PageId } from './components/PagePagination';
 
@@ -188,7 +189,10 @@ export function App() {
       </main>
 
       {/* Global Enterprise Footer */}
-      <Footer onRebootBootScreen={() => setIsLoading(true)} />
+      <Footer onNavigate={handleNavigate} onRebootBootScreen={() => setIsLoading(true)} />
+
+      {/* Floating Bottom Navigation */}
+      <FloatingQuickNav currentPage={currentPage} onNavigate={handleNavigate} />
     </div>
   );
 }
