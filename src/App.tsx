@@ -94,7 +94,13 @@ export function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleLaunchAnalysis = () => {
+  const handleLaunchAnalysis = (sampleId?: string) => {
+    if (sampleId) {
+      const target = SAMPLE_MEDIA.find((s) => s.id === sampleId);
+      if (target) {
+        setActiveSample(target);
+      }
+    }
     handleNavigate('scanner');
     setScannerTriggerCount((c) => c + 1);
   };
@@ -185,7 +191,7 @@ export function App() {
         {/* ========================================================================= */}
         {currentPage === 'applications' && (
           <div key="applications" className="page-transition">
-            <Applications />
+            <Applications onTestInScanner={handleLaunchAnalysis} />
           </div>
         )}
 
@@ -194,7 +200,7 @@ export function App() {
         {/* ========================================================================= */}
         {currentPage === 'case-studies' && (
           <div key="case-studies" className="page-transition">
-            <CustomerStories />
+            <CustomerStories onTestInScanner={handleLaunchAnalysis} />
             <WhyDeepGuard />
           </div>
         )}

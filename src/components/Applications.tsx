@@ -1,60 +1,147 @@
-import React from 'react';
-import { Share2, ShieldAlert, Scale, Newspaper, UserCheck, ArrowUpRight, CheckCircle2 } from 'lucide-react';
+import React, { useState } from 'react';
+import { Share2, ShieldAlert, Scale, Newspaper, UserCheck, ArrowUpRight, CheckCircle2, Sparkles } from 'lucide-react';
 import { sounds } from '../utils/soundEffects';
+import { ApplicationModal, type ApplicationData } from './Modals/ApplicationModal';
 
-export const Applications: React.FC = () => {
-  const apps = [
+interface ApplicationsProps {
+  onTestInScanner?: (sampleId: string) => void;
+}
+
+export const Applications: React.FC<ApplicationsProps> = ({ onTestInScanner = () => {} }) => {
+  const [selectedApp, setSelectedApp] = useState<ApplicationData | null>(null);
+
+  const apps: ApplicationData[] = [
     {
+      id: 'fintech-kyc',
       title: 'IDENTITY & FINTECH',
       subtitle: 'Biometric Anti-Spoofing & KYC',
       description: 'Fortify digital banking onboarding, facial liveness verification, and remote authentication against zero-day deepfake replay attacks.',
       image: '/images/app-banking.jpg',
       badge: 'LIVENESS VERIFIED',
       badgeColor: 'bg-emerald-50 text-emerald-700 border-emerald-200',
-      icon: UserCheck,
       metric: 'Zero-Trust Liveness Injection Defense',
+      sampleId: 'sample-user-deepfake',
+      threatModel: 'Attackers injecting virtual camera feeds, pre-recorded neural face-swaps, and generative masks into banking e-KYC workflows to open fraudulent credit facilities.',
+      aiDefense: [
+        'Remote Photoplethysmography (rPPG) extraction of biological vascular pulse',
+        'MTCNN 68-point 3D micro-movement & corneal specular ray-tracing',
+        'Error Level Analysis (ELA) detecting autoencoder boundary seams',
+        'Hardware Quantization Table (DQT) validation against synthetic generators'
+      ],
+      compliance: ['NIST FRVT 99.98%', 'FIPS 140-3 Vault', 'ISO/IEC 30107-3 PAD'],
+      specs: [
+        { label: 'Inference Latency', value: '198ms' },
+        { label: 'Detection Accuracy', value: '99.96%' },
+        { label: 'False Acceptance', value: '< 0.001%' },
+        { label: 'Throughput', value: '12,000 req/s' }
+      ]
     },
     {
+      id: 'newsroom-media',
       title: 'BROADCAST NEWS & MEDIA',
       subtitle: 'Real-Time Newsroom Verification',
       description: 'Empower journalists and editorial broadcast suites to instantly validate citizen-submitted footage and breaking political press conferences.',
       image: '/images/app-newsroom.jpg',
       badge: 'BROADCAST GRADE',
       badgeColor: 'bg-sky-50 text-sky-700 border-sky-200',
-      icon: Newspaper,
       metric: '< 15s Latency in Live Control Rooms',
+      sampleId: 'sample-faceswap',
+      threatModel: 'Geopolitical bad actors distributing high-resolution fabricated footage of heads-of-state declaring hostilities or citizen-submitted footage with manipulated identities.',
+      aiDefense: [
+        'Multi-spectral 2D Fourier (FFT) high-frequency residual extraction',
+        'Temporal inter-frame micro-flicker and optical flow consistency check',
+        'Bayer filter sensor noise fingerprint matching (camera hardware PRNU)',
+        'Automated C2PA cryptographic provenance manifest validation'
+      ],
+      compliance: ['Reuters-AP Standard', 'C2PA Compatible', 'ISO 27037 Certified'],
+      specs: [
+        { label: 'Video Turnaround', value: '< 15s / clip' },
+        { label: 'Frame Analysis', value: '60 FPS Full Stream' },
+        { label: 'Max Resolution', value: '4K Ultra HD' },
+        { label: 'Ensemble Vectors', value: '5 AI Engines' }
+      ]
     },
     {
+      id: 'digital-forensics-law',
       title: 'DIGITAL FORENSICS & LAW',
       subtitle: 'Courtroom-Admissible Evidence',
       description: 'Cryptographically sealed audit trails, 2D Fourier spectra, and pixel tamper maps engineered to meet ISO/IEC 27037 legal standards.',
       image: '/images/app-forensics.jpg',
       badge: 'ISO/IEC 27037 ADMISSIBLE',
       badgeColor: 'bg-violet-50 text-violet-700 border-violet-200',
-      icon: Scale,
       metric: 'Chained SHA-256 Hash Verification',
+      sampleId: 'sample-user-webcam',
+      threatModel: 'Spliced surveillance video or manipulated defamation media submitted as judicial evidence to mislead criminal prosecutions and civil litigation.',
+      aiDefense: [
+        'Cryptographically sealed SHA-256 chained audit manifest (Chain of Custody)',
+        'Canvas pixel-level Error Level Analysis (ELA) tamper heatmap generation',
+        'Discrete Cosine Transform (DCT) 8x8 block quantization variance mapping',
+        'Mathematical explainability with 0.02% false positive margin'
+      ],
+      compliance: ['ISO/IEC 27037 Standard', 'FRE Rule 902(14)', 'NIST Admissible'],
+      specs: [
+        { label: 'Audit Signature', value: 'SHA-256 Merkle Root' },
+        { label: 'Admissibility', value: '100% High Court Record' },
+        { label: 'ROC-AUC Score', value: '0.9994' },
+        { label: 'Zero-Retention', value: 'FIPS 140-3 Validated' }
+      ]
     },
     {
+      id: 'executive-cybersecurity',
       title: 'EXECUTIVE CYBERSECURITY',
       subtitle: 'Boardroom & CEO Clone Defense',
       description: 'Defend against AI voice and video cloning used in high-stakes CEO impersonation fraud, authorization spoofs, and corporate espionage.',
       image: '/images/app-executive.jpg',
       badge: 'BIOMETRIC ENCRYPTED',
       badgeColor: 'bg-blue-50 text-blue-700 border-blue-200',
-      icon: ShieldAlert,
       metric: 'Real-Time Meeting Stream Protection',
+      sampleId: 'sample-authentic',
+      threatModel: 'Real-time synthetic video and voice clones of CEOs deployed during confidential Zoom/Teams board calls to authorize fraudulent multimillion-dollar capital transfers.',
+      aiDefense: [
+        'Real-time video conferencing stream frame buffer inspection',
+        'Audio-visual phoneme-to-viseme lip synchronization discrepancy tracking',
+        'Non-Euclidean pupil reflection angular ray-tracing (18.6° anomaly detection)',
+        'Zero-Trust Biometric Gate with automated meeting session abort signals'
+      ],
+      compliance: ['SOC2 Type II', 'ISO 27001 Certified', 'FIPS 140-3 Vault'],
+      specs: [
+        { label: 'Interception Speed', value: '< 2.8s' },
+        { label: 'Capital Loss Prevented', value: '$4.8M+' },
+        { label: 'Stream Protocol', value: 'WebRTC / SIP' },
+        { label: 'Audio Sampling', value: '48kHz Hi-Fi' }
+      ]
     },
     {
+      id: 'social-platforms',
       title: 'SOCIAL PLATFORMS',
       subtitle: 'High-Throughput Content Moderation',
       description: 'Automated ultra-scale neural scanning of media ingestion pipelines to quarantine synthetic disinformation campaigns before viral spread.',
       image: '/images/hero-biometrics.jpg',
       badge: '5M+ ITEMS / DAY',
       badgeColor: 'bg-cyan-50 text-cyan-700 border-cyan-200',
-      icon: Share2,
       metric: 'Sub-250ms High-Concurrency API',
+      sampleId: 'sample-diffusion',
+      threatModel: 'Coordinated generative disinformation campaigns deploying millions of deepfaked political figures and automated bot-farm face-swaps across viral social feeds.',
+      aiDefense: [
+        'Distributed edge neural inference across 32 global cloud regions',
+        'Ultra-scale feature embedding extraction with ResNet-50 and Vision Transformers',
+        'Automated quarantine metadata tagging and platform warning label injection',
+        'Real-time threat telemetry feed to global trust and safety teams'
+      ],
+      compliance: ['EU AI Act Article 52', 'Trust & Safety Alliance', 'GDPR Compliant'],
+      specs: [
+        { label: 'Daily Capacity', value: '5,000,000+ Items' },
+        { label: 'API Latency', value: '< 220ms' },
+        { label: 'Edge Nodes', value: '32 Regions' },
+        { label: 'Uptime SLA', value: '99.99%' }
+      ]
     },
   ];
+
+  const handleCardClick = (app: ApplicationData) => {
+    sounds.playBlip();
+    setSelectedApp(app);
+  };
 
   return (
     <section id="applications" className="py-12 md:py-16 relative overflow-hidden bg-slate-50/60 dark:bg-slate-950 border-b border-slate-200/80 dark:border-slate-800/80 transition-colors duration-300">
@@ -73,22 +160,32 @@ export const Applications: React.FC = () => {
 
           <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 max-w-2xl">
             From intelligence agencies and newsrooms to financial institutions and social networks, 
-            DeepGuard AI provides mission-critical synthetic media protection.
+            DeepGuard AI provides mission-critical synthetic media protection. Click any sector to inspect its architecture.
           </p>
         </div>
 
-        {/* 5 Applications Grid with Real Photography */}
+        {/* 5 Applications Grid with Real Photography & Interactive Modals */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {apps.map((app, idx) => {
-            const Icon = app.icon;
+            const Icon = idx === 0 ? UserCheck : idx === 1 ? Newspaper : idx === 2 ? Scale : idx === 3 ? ShieldAlert : Share2;
 
             return (
               <div
-                key={app.title}
+                key={app.id}
+                onClick={() => handleCardClick(app)}
                 onMouseEnter={() => sounds.playBlip()}
-                className={`group rounded-3xl overflow-hidden flex flex-col justify-between transition-all duration-300 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-blue-400 dark:hover:border-cyan-500/50 hover:shadow-2xl hover:-translate-y-1.5 shadow-sm ${
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    handleCardClick(app);
+                  }
+                }}
+                className={`group rounded-3xl overflow-hidden flex flex-col justify-between transition-all duration-300 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-blue-400 dark:hover:border-cyan-500/50 hover:shadow-2xl hover:-translate-y-1.5 active:scale-[0.99] shadow-sm cursor-pointer select-none ${
                   idx === 0 ? 'lg:col-span-1' : ''
                 }`}
+                title={`Click to view ${app.subtitle} architecture and test in scanner`}
               >
                 {/* Photo Preview Container */}
                 <div className="relative aspect-[16/10] overflow-hidden bg-slate-900">
@@ -106,7 +203,7 @@ export const Applications: React.FC = () => {
                       ● {app.badge}
                     </span>
 
-                    <div className="w-8 h-8 rounded-lg bg-slate-900/80 border border-white/20 flex items-center justify-center text-white backdrop-blur-md">
+                    <div className="w-8 h-8 rounded-lg bg-slate-900/80 border border-white/20 flex items-center justify-center text-white backdrop-blur-md group-hover:bg-blue-600 group-hover:border-blue-400 transition-colors">
                       <Icon className="w-4 h-4" />
                     </div>
                   </div>
@@ -116,7 +213,7 @@ export const Applications: React.FC = () => {
                     <span className="text-[10px] font-mono tracking-widest text-cyan-300 uppercase font-semibold">
                       {app.title}
                     </span>
-                    <h3 className="font-display font-bold text-base text-white truncate">
+                    <h3 className="font-display font-bold text-base text-white truncate group-hover:text-cyan-200 transition-colors">
                       {app.subtitle}
                     </h3>
                   </div>
@@ -133,7 +230,10 @@ export const Applications: React.FC = () => {
                       <CheckCircle2 className="w-3.5 h-3.5" />
                       <span>{app.metric}</span>
                     </div>
-                    <ArrowUpRight className="w-4 h-4 text-slate-400 group-hover:text-blue-600 dark:group-hover:text-cyan-400 transition-colors" />
+                    <div className="flex items-center gap-1 text-slate-400 group-hover:text-blue-600 dark:group-hover:text-cyan-400 font-semibold transition-colors">
+                      <span className="text-[11px] font-mono hidden sm:inline">Explore</span>
+                      <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -142,6 +242,13 @@ export const Applications: React.FC = () => {
         </div>
 
       </div>
+
+      {/* Interactive Application Dossier Modal */}
+      <ApplicationModal
+        app={selectedApp}
+        onClose={() => setSelectedApp(null)}
+        onTestInScanner={onTestInScanner}
+      />
     </section>
   );
 };

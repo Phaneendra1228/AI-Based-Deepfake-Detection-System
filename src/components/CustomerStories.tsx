@@ -1,10 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ShieldCheck, Award, Building2, Quote, ArrowUpRight, CheckCircle2 } from 'lucide-react';
 import { sounds } from '../utils/soundEffects';
+import { CaseStudyModal, type CaseStudyData } from './Modals/CaseStudyModal';
 
-export const CustomerStories: React.FC = () => {
-  const stories = [
+interface CustomerStoriesProps {
+  onTestInScanner?: (sampleId: string) => void;
+}
+
+export const CustomerStories: React.FC<CustomerStoriesProps> = ({ onTestInScanner = () => {} }) => {
+  const [selectedStory, setSelectedStory] = useState<CaseStudyData | null>(null);
+
+  const stories: CaseStudyData[] = [
     {
+      id: 'ceo-fraud-prevention',
       sector: 'FINANCIAL CYBERSECURITY',
       institution: 'Tier-1 Global Investment Bank',
       headline: '$4.8M Synthetic CEO Wire Fraud Prevented',
@@ -15,8 +23,22 @@ export const CustomerStories: React.FC = () => {
       metricLabel: 'Capital Loss Averted',
       verified: 'NIST FRVT Compliant',
       tagColor: 'text-emerald-700 bg-emerald-50 border-emerald-200',
+      sampleId: 'sample-user-deepfake',
+      attackVector:
+        'Attackers deployed a real-time synthetic video and voice clone of the Group CEO during an unannounced overseas M&A executive call, attempting an urgent wire authorization of $4.8M to an offshore account.',
+      interceptionDetail:
+        'DeepGuard AI analyzed the incoming video stream at 60 FPS. Within 2.8 seconds, the neural engine detected anomalous pupil specular reflections (18.6° ray-tracing discrepancy), Poisson facial boundary seams, and non-biological rPPG micro-pulse variance.',
+      operationalOutcome:
+        'The unauthorized transfer was aborted automatically. DeepGuard sealed a cryptographic SHA-256 Chain of Custody evidence manifest, and law enforcement was alerted with verified telemetry.',
+      forensicEvidence: [
+        'SHA-256 Merkle Evidence Root: 54a6...3de3',
+        'Poisson Facial Seam Delta: +58.4%',
+        'Pupil Specular Discrepancy: 18.6°',
+        'rPPG Biological Pulse: Null / Negative'
+      ]
     },
     {
+      id: 'newsroom-citizen-verification',
       sector: 'MEDIA & PRESS ALLIANCE',
       institution: 'International News Syndicate',
       headline: '250,000+ Warzone Citizen Videos Authenticated',
@@ -27,8 +49,22 @@ export const CustomerStories: React.FC = () => {
       metricLabel: 'Newsroom Turnaround',
       verified: 'Reuters & AP Protocol Compatible',
       tagColor: 'text-sky-700 bg-sky-50 border-sky-200',
+      sampleId: 'sample-faceswap',
+      attackVector:
+        'In geopolitical crisis reporting, bad actors submit manipulated citizen footage, recycled conflict clips with face-swapped spokespersons, and AI-generated military actions designed to deceive global wire services.',
+      interceptionDetail:
+        'DeepGuard AI automated the syndicate intake desk. The 5-model neural ensemble performed 2D Fourier (FFT) high-frequency residual noise analysis, camera Bayer pattern PRNU matching, and temporal inter-frame micro-flicker scanning.',
+      operationalOutcome:
+        'Editorial suites authenticated over 250,000 citizen-submitted clips with sub-15s turnaround, flagging 4,200+ deceptive media assets prior to satellite broadcast and preserving journalistic credibility.',
+      forensicEvidence: [
+        'C2PA Provenance Manifest Verification',
+        'Bayer Filter Sensor PRNU Match: Failed',
+        '2D FFT Lattice Noise Spikes Detected',
+        'Temporal Frame Jitter: p < 0.0001'
+      ]
     },
     {
+      id: 'courtroom-evidence-validation',
       sector: 'JUDICIAL & FORENSIC LAW',
       institution: 'State Cyber Crime Bureau',
       headline: 'Courtroom-Admissible Pixel Tamper Validation',
@@ -39,8 +75,26 @@ export const CustomerStories: React.FC = () => {
       metricLabel: 'Admissibility Record',
       verified: 'ISO/IEC 27037 Certified',
       tagColor: 'text-violet-700 bg-violet-50 border-violet-200',
+      sampleId: 'sample-user-webcam',
+      attackVector:
+        "Defense counsel challenged the authenticity of key video surveillance evidence in a high-profile prosecution, alleging that the subject's face had been maliciously deepfaked onto the suspect.",
+      interceptionDetail:
+        'DeepGuard AI conducted exhaustive mathematical tamper validation: Error Level Analysis (ELA) compression deltas, 8x8 block Discrete Cosine Transform (DCT) quantization variances, and anatomical 68-point landmark micro-dynamics.',
+      operationalOutcome:
+        'Generated a court-certified ISO/IEC 27037 Forensic Evidence Dossier. The High Court admitted the evidence in full, establishing legal precedent for automated mathematical explainability in cybercrime proceedings.',
+      forensicEvidence: [
+        'ISO/IEC 27037 Legal Audit Certificate',
+        'Offscreen Canvas ELA Tamper Heatmap',
+        'Hardware DQT Quantization Verification',
+        'Chain of Custody Timestamp: Immutable'
+      ]
     },
   ];
+
+  const handleCardClick = (story: CaseStudyData) => {
+    sounds.playBlip();
+    setSelectedStory(story);
+  };
 
   return (
     <section id="case-studies" className="py-12 md:py-16 relative overflow-hidden bg-white dark:bg-slate-950 border-b border-slate-200/80 dark:border-slate-800/80 transition-colors duration-300">
@@ -62,7 +116,7 @@ export const CustomerStories: React.FC = () => {
 
           <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 max-w-2xl">
             See how sovereign defense agencies, international broadcasters, and financial institutions 
-            rely on DeepGuard AI to neutralize generative deception in real time.
+            rely on DeepGuard AI to neutralize generative deception in real time. Click any case study to read the full operational brief.
           </p>
         </div>
 
@@ -71,8 +125,18 @@ export const CustomerStories: React.FC = () => {
           {stories.map((story) => (
             <div
               key={story.institution}
+              onClick={() => handleCardClick(story)}
               onMouseEnter={() => sounds.playBlip()}
-              className="group rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-blue-400 dark:hover:border-cyan-500/50 p-8 flex flex-col justify-between shadow-sm hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-300 relative overflow-hidden"
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  handleCardClick(story);
+                }
+              }}
+              className="group rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-blue-400 dark:hover:border-cyan-500/50 p-8 flex flex-col justify-between shadow-sm hover:shadow-2xl hover:-translate-y-1.5 active:scale-[0.99] transition-all duration-300 relative overflow-hidden cursor-pointer select-none"
+              title={`Click to read ${story.institution} incident report and test in scanner`}
             >
               {/* Top Sector Badge & Impact Metric */}
               <div>
@@ -120,8 +184,11 @@ export const CustomerStories: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-400 dark:text-slate-300 group-hover:bg-blue-50 dark:group-hover:bg-cyan-950/40 group-hover:text-blue-600 dark:group-hover:text-cyan-400 transition-colors">
-                  <ArrowUpRight className="w-4 h-4" />
+                <div className="flex items-center gap-1.5 text-slate-400 group-hover:text-blue-600 dark:group-hover:text-cyan-400 transition-colors">
+                  <span className="text-[11px] font-mono font-semibold hidden sm:inline">Case Brief</span>
+                  <div className="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center group-hover:bg-blue-50 dark:group-hover:bg-cyan-950/40 group-hover:text-blue-600 dark:group-hover:text-cyan-400 transition-all shadow-2xs">
+                    <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                  </div>
                 </div>
               </div>
             </div>
@@ -152,6 +219,13 @@ export const CustomerStories: React.FC = () => {
         </div>
 
       </div>
+
+      {/* Interactive Case Study Dossier Modal */}
+      <CaseStudyModal
+        story={selectedStory}
+        onClose={() => setSelectedStory(null)}
+        onTestInScanner={onTestInScanner}
+      />
     </section>
   );
 };
