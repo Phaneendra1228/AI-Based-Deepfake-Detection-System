@@ -21,7 +21,7 @@ import { WhyDeepGuard } from './components/WhyDeepGuard';
 import { CTASection } from './components/CTASection';
 import { FloatingQuickNav } from './components/FloatingQuickNav';
 import { Footer } from './components/Footer';
-import { PagePagination, PAGES_LIST, type PageId } from './components/PagePagination';
+import { PAGES_LIST, type PageId } from './components/PagePagination';
 import { sounds } from './utils/soundEffects';
 
 export function App() {
@@ -132,7 +132,7 @@ export function App() {
       />
 
       {/* Main Page Container */}
-      <main className="relative z-10 pt-16 sm:pt-20 flex-1">
+      <main className="relative z-10 pt-[74px] sm:pt-[82px] flex-1">
         {/* Real-Time Operational Telemetry Ticker */}
         <LiveTelemetryTicker />
 
@@ -216,9 +216,6 @@ export function App() {
           </div>
         )}
       </main>
-
-      {/* Interactive Bottom Page Tour / Stepper Navigation */}
-      <PagePagination currentPage={currentPage} onNavigate={handleNavigate} />
 
       {/* Global Enterprise Footer */}
       <Footer onNavigate={handleNavigate} onRebootBootScreen={() => setIsLoading(true)} />

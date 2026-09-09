@@ -77,7 +77,9 @@ export const LiveThreatRadar: React.FC = () => {
   const [incidents, setIncidents] = useState<Incident[]>(INITIAL_INCIDENTS);
   const [selectedFilter, setSelectedFilter] = useState<'ALL' | 'Banking & KYC' | 'Executive Video' | 'Broadcast Media'>('ALL');
   const [radarRotation, setRadarRotation] = useState(0);
-  const [liveBlocksToday, setLiveBlocksToday] = useState(38412);
+  const [liveBlocksToday, setLiveBlocksToday] = useState(38413);
+  const [liveLatency, setLiveLatency] = useState('14.2');
+  const [threatPulse, setThreatPulse] = useState(false);
   const [activeTab, setActiveTab] = useState<'stream' | 'radar'>('stream');
 
   // Rotate radar sweep smoothly
@@ -93,9 +95,9 @@ export const LiveThreatRadar: React.FC = () => {
     return () => cancelAnimationFrame(animId);
   }, []);
 
-  // Periodic automatic live feed push
+  // Periodic automatic real-time threat feed and counter update
   useEffect(() => {
-    const interval = setInterval(() => {
+    const attackInterval = setInterval(() => {
       const randomSeed = SIMULATED_VECTORS[Math.floor(Math.random() * SIMULATED_VECTORS.length)];
       const newIncident: Incident = {
         id: `INC-${Math.floor(9043 + Math.random() * 800)}`,
@@ -110,9 +112,18 @@ export const LiveThreatRadar: React.FC = () => {
 
       setIncidents((prev) => [newIncident, ...prev.slice(0, 7)]);
       setLiveBlocksToday((prev) => prev + 1);
-    }, 6500);
+      setThreatPulse(true);
+      setTimeout(() => setThreatPulse(false), 700);
+    }, 3500);
 
-    return () => clearInterval(interval);
+    const latencyInterval = setInterval(() => {
+      setLiveLatency((12.2 + Math.random() * 2.9).toFixed(1));
+    }, 1900);
+
+    return () => {
+      clearInterval(attackInterval);
+      clearInterval(latencyInterval);
+    };
   }, []);
 
   const handleSimulateAttack = () => {
@@ -209,10 +220,22 @@ export const LiveThreatRadar: React.FC = () => {
 
         {/* Real-time Metric Cards Row */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-6">
-          <div className="p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs flex items-center justify-between">
+          <div className={`p-4 rounded-xl bg-white dark:bg-slate-900 border shadow-xs flex items-center justify-between transition-all duration-300 ${
+            threatPulse
+              ? 'border-rose-400 dark:border-rose-500 ring-2 ring-rose-400/20 bg-rose-50/40 dark:bg-rose-950/30'
+              : 'border-slate-200 dark:border-slate-800'
+          }`}>
             <div>
-              <span className="text-[11px] font-mono text-slate-500 dark:text-slate-400 block uppercase">Threats Neutralized Today</span>
-              <span className="font-display font-bold text-xl sm:text-2xl text-slate-900 dark:text-white tabular-nums">
+              <div className="flex items-center gap-1.5 mb-1">
+                <span className="text-[11px] font-mono text-slate-500 dark:text-slate-400 block uppercase">Threats Neutralized Today</span>
+                <span className="flex h-1.5 w-1.5 relative">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-rose-500"></span>
+                </span>
+              </div>
+              <span className={`font-display font-bold text-xl sm:text-2xl text-slate-900 dark:text-white tabular-nums transition-transform ${
+                threatPulse ? 'text-rose-600 dark:text-rose-400 scale-105' : ''
+              }`}>
                 {liveBlocksToday.toLocaleString()}
               </span>
             </div>
@@ -223,9 +246,12 @@ export const LiveThreatRadar: React.FC = () => {
 
           <div className="p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs flex items-center justify-between">
             <div>
-              <span className="text-[11px] font-mono text-slate-500 dark:text-slate-400 block uppercase">Median Analysis Latency</span>
+              <div className="flex items-center gap-1.5 mb-1">
+                <span className="text-[11px] font-mono text-slate-500 dark:text-slate-400 block uppercase">Median Analysis Latency</span>
+                <span className="w-1.5 h-1.5 rounded-full bg-blue-500 dark:bg-cyan-400 animate-pulse" />
+              </div>
               <span className="font-display font-bold text-xl sm:text-2xl text-blue-600 dark:text-cyan-400 tabular-nums">
-                14.2ms
+                {liveLatency}ms
               </span>
             </div>
             <div className="w-9 h-9 rounded-lg bg-blue-50 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-800/60 flex items-center justify-center text-blue-600 dark:text-cyan-400">
@@ -235,7 +261,10 @@ export const LiveThreatRadar: React.FC = () => {
 
           <div className="p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs flex items-center justify-between">
             <div>
-              <span className="text-[11px] font-mono text-slate-500 dark:text-slate-400 block uppercase">Distributed Edge Nodes</span>
+              <div className="flex items-center gap-1.5 mb-1">
+                <span className="text-[11px] font-mono text-slate-500 dark:text-slate-400 block uppercase">Distributed Edge Nodes</span>
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+              </div>
               <span className="font-display font-bold text-xl sm:text-2xl text-emerald-600 dark:text-emerald-400 tabular-nums">
                 32 / 32
               </span>
@@ -247,7 +276,10 @@ export const LiveThreatRadar: React.FC = () => {
 
           <div className="p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs flex items-center justify-between">
             <div>
-              <span className="text-[11px] font-mono text-slate-500 dark:text-slate-400 block uppercase">True Human Precision</span>
+              <div className="flex items-center gap-1.5 mb-1">
+                <span className="text-[11px] font-mono text-slate-500 dark:text-slate-400 block uppercase">True Human Precision</span>
+                <span className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
+              </div>
               <span className="font-display font-bold text-xl sm:text-2xl text-indigo-600 dark:text-indigo-400 tabular-nums">
                 99.98%
               </span>
