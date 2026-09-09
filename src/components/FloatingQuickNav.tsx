@@ -15,8 +15,16 @@ export const FloatingQuickNav: React.FC<FloatingQuickNavProps> = ({
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
+    let ticking = false;
     const handleScroll = () => {
-      setIsVisible(window.scrollY > 350);
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          const visible = window.scrollY > 350;
+          setIsVisible((prev) => (prev !== visible ? visible : prev));
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);

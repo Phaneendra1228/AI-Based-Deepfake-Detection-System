@@ -76,24 +76,10 @@ const SIMULATED_VECTORS = [
 export const LiveThreatRadar: React.FC = () => {
   const [incidents, setIncidents] = useState<Incident[]>(INITIAL_INCIDENTS);
   const [selectedFilter, setSelectedFilter] = useState<'ALL' | 'Banking & KYC' | 'Executive Video' | 'Broadcast Media'>('ALL');
-  const [radarRotation, setRadarRotation] = useState(0);
   const [liveBlocksToday, setLiveBlocksToday] = useState(38413);
   const [liveLatency, setLiveLatency] = useState('14.2');
   const [threatPulse, setThreatPulse] = useState(false);
   const [activeTab, setActiveTab] = useState<'stream' | 'radar'>('stream');
-
-  // Rotate radar sweep smoothly
-  useEffect(() => {
-    let animId: number;
-    let start = performance.now();
-    const loop = (now: number) => {
-      const elapsed = (now - start) / 1000;
-      setRadarRotation((elapsed * 45) % 360);
-      animId = requestAnimationFrame(loop);
-    };
-    animId = requestAnimationFrame(loop);
-    return () => cancelAnimationFrame(animId);
-  }, []);
 
   // Periodic automatic real-time threat feed and counter update
   useEffect(() => {
@@ -412,10 +398,7 @@ export const LiveThreatRadar: React.FC = () => {
                 <div className="absolute inset-y-0 left-1/2 w-px bg-slate-200 dark:bg-slate-800 pointer-events-none" />
 
                 {/* Rotating Beam */}
-                <div
-                  className="absolute inset-0 pointer-events-none"
-                  style={{ transform: `rotate(${radarRotation}deg)` }}
-                >
+                <div className="absolute inset-0 pointer-events-none animate-[spin_8s_linear_infinite] transform-gpu will-change-transform">
                   <div className="w-1/2 h-1/2 bg-gradient-to-br from-blue-500/25 dark:from-cyan-400/30 to-transparent origin-bottom-right rounded-tl-full" />
                 </div>
 

@@ -13,7 +13,6 @@ html {
   -webkit-tap-highlight-color: transparent;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 body {
@@ -21,7 +20,7 @@ body {
   color: #0f172a;
   overflow-x: hidden;
   touch-action: manipulation;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  -webkit-overflow-scrolling: touch;
 }
 
 /* Dark Mode Global Styles */
@@ -284,4 +283,35 @@ html.dark .text-glow-crimson {
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
 }
+
+/* Reverse Spin for HUD Arc */
+@keyframes spinReverse {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+.animate-spin-reverse {
+  animation: spinReverse 16s linear infinite;
+}
+
+/* Mobile Scrolling Smoothness and GPU Offloading */
+@media (max-width: 768px) {
+  /* Prevent background paint jank */
+  .transform-gpu {
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+  }
+
+  /* Cap expensive full-screen blur filters on mobile GPUs */
+  .backdrop-blur-2xl,
+  .backdrop-blur-xl {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+}
+
 

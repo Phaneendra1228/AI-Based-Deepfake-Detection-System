@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Scan, Eye, Activity, AlertTriangle, CheckCircle2 } from 'lucide-react';
+import React, { useState, useRef } from 'react';
+import { Scan, Activity } from 'lucide-react';
 
 interface FaceMeshHUDProps {
   isManipulated?: boolean;
@@ -33,28 +33,8 @@ const FACE_LANDMARKS = [
 ];
 
 export const FaceMeshHUD: React.FC<FaceMeshHUDProps> = ({ isManipulated = false, onToggleState }) => {
-  const [rotationDeg, setRotationDeg] = useState(0);
-  const [scanPos, setScanPos] = useState(15);
   const [activeLandmark, setActiveLandmark] = useState<number | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-
-  // Animate HUD rotation and scanning laser
-  useEffect(() => {
-    let animId: number;
-    let start = performance.now();
-
-    const loop = (now: number) => {
-      const elapsed = (now - start) / 1000;
-      setRotationDeg((elapsed * 15) % 360);
-      // Sine wave scanline between 10% and 90%
-      const pos = 50 + Math.sin(elapsed * 1.5) * 40;
-      setScanPos(pos);
-      animId = requestAnimationFrame(loop);
-    };
-
-    animId = requestAnimationFrame(loop);
-    return () => cancelAnimationFrame(animId);
-  }, []);
 
   const themeCyan = isManipulated ? '#E11D48' : '#0284C7';
   const themeViolet = isManipulated ? '#F43F5E' : '#4F46E5';
@@ -92,8 +72,7 @@ export const FaceMeshHUD: React.FC<FaceMeshHUDProps> = ({ isManipulated = false,
       <div className="relative w-full h-[calc(100%-48px)] mt-2 flex items-center justify-center">
         {/* Rotating Radar Rings */}
         <div
-          className="absolute w-[84%] aspect-square rounded-full border border-dashed border-slate-200 pointer-events-none transition-transform"
-          style={{ transform: `rotate(${rotationDeg}deg)` }}
+          className="absolute w-[84%] aspect-square rounded-full border border-dashed border-slate-200 pointer-events-none animate-[spin_24s_linear_infinite] transform-gpu will-change-transform"
         >
           {/* Compass ticks */}
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1.5 h-3 bg-blue-500/40" />
@@ -104,19 +83,17 @@ export const FaceMeshHUD: React.FC<FaceMeshHUDProps> = ({ isManipulated = false,
 
         {/* Counter-rotating Inner Arc */}
         <div
-          className="absolute w-[68%] aspect-square rounded-full border-t-2 border-r border-transparent pointer-events-none"
+          className="absolute w-[68%] aspect-square rounded-full border-t-2 border-r border-transparent pointer-events-none animate-spin-reverse transform-gpu will-change-transform"
           style={{
             borderTopColor: themeCyan,
             borderRightColor: 'rgba(2, 132, 199, 0.15)',
-            transform: `rotate(${-rotationDeg * 1.5}deg)`
           }}
         />
 
         {/* Moving Laser Scan Line */}
         <div
-          className="absolute left-2 right-2 h-0.5 pointer-events-none z-20 transition-all"
+          className="absolute left-2 right-2 h-0.5 pointer-events-none z-20 animate-laser-sweep transform-gpu will-change-transform"
           style={{
-            top: `${scanPos}%`,
             background: `linear-gradient(90deg, transparent 0%, ${themeCyan} 50%, transparent 100%)`,
             boxShadow: `0 0 10px 1px ${themeCyan}`
           }}
@@ -228,7 +205,7 @@ export const FaceMeshHUD: React.FC<FaceMeshHUDProps> = ({ isManipulated = false,
           </div>
           <div className="flex items-center gap-1.5 px-2 py-0.5 rounded bg-white/90 border border-slate-200 shadow-xs">
             <span className="text-indigo-600 font-bold">AZIMUTH:</span>
-            <span>{Math.round(rotationDeg)}° NOMINAL</span>
+            <span>360° NOMINAL</span>
           </div>
         </div>
 
