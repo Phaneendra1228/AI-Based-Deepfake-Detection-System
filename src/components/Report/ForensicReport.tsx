@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import type { MediaSample } from '../../types';
-import { ACCURACY_BENCHMARKS, SYSTEM_ACCURACY_SUMMARY } from '../../data/mockData';
+import { ACCURACY_BENCHMARKS } from '../../data/mockData';
 import { HeatmapVisual } from './HeatmapVisual';
 import {
   FileText,
@@ -8,18 +8,14 @@ import {
   CheckCircle2,
   ShieldCheck,
   ShieldAlert,
-  Sliders,
   HelpCircle,
   Download,
-  Share2,
   Award,
   BarChart3,
-  Binary,
-  Lock,
-  Zap,
   Check
 } from 'lucide-react';
 import { sounds } from '../../utils/soundEffects';
+import { exportAuditCertificatePDF } from '../../utils/exportForensics';
 
 interface ForensicReportProps {
   sample: MediaSample;
@@ -27,6 +23,7 @@ interface ForensicReportProps {
 
 export const ForensicReport: React.FC<ForensicReportProps> = ({ sample }) => {
   const isManipulated = sample.result === 'DEEPFAKE (FAKE)';
+  const [isExporting, setIsExporting] = useState(false);
 
   const metrics = [
     { label: 'Facial Consistency', value: sample.metrics.facialConsistency, pass: sample.metrics.facialConsistency > 70 },
@@ -39,7 +36,11 @@ export const ForensicReport: React.FC<ForensicReportProps> = ({ sample }) => {
 
   const handleExportPDF = () => {
     sounds.playComplete();
-    alert(`[DeepGuard Forensics Audit Certificate]\n\nAsset: ${sample.filename}\nVerdict: ${sample.result}\nCertainty Confidence: ${sample.confidence}%\nPrecision Margin: ±0.02%\nNIST FRVT Accuracy: 99.94%\nROC-AUC: 0.9992\nModel Consensus: 5/5 Neural Ensembles in 100% Agreement\nFIPS 140-3 Cryptographic SHA-256 Hash Verified.`);
+    setIsExporting(true);
+    exportAuditCertificatePDF(sample);
+    setTimeout(() => {
+      setIsExporting(false);
+    }, 2500);
   };
 
   const ensembleVotes = [
@@ -127,10 +128,20 @@ export const ForensicReport: React.FC<ForensicReportProps> = ({ sample }) => {
 
               <button
                 onClick={handleExportPDF}
-                className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-750 text-xs font-mono font-bold text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 transition-colors shadow-xs cursor-pointer"
+                disabled={isExporting}
+                className="flex items-center gap-2 px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-mono font-bold shadow-md shadow-blue-600/20 transition-all hover:scale-105 active:scale-95 cursor-pointer disabled:opacity-90"
               >
-                <Download className="w-3.5 h-3.5" />
-                <span>Export Audit Certificate</span>
+                {isExporting ? (
+                  <>
+                    <CheckCircle2 className="w-3.5 h-3.5 text-white" />
+                    <span>Certificate Exported!</span>
+                  </>
+                ) : (
+                  <>
+                    <Download className="w-3.5 h-3.5" />
+                    <span>Export Audit Certificate</span>
+                  </>
+                )}
               </button>
             </div>
           </div>

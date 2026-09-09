@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import type { RecentScan } from '../../types';
-import { X, ShieldCheck, ShieldAlert, CheckCircle2, AlertTriangle, Lock } from 'lucide-react';
+import { X, ShieldCheck, ShieldAlert, CheckCircle2, AlertTriangle, Lock, Download } from 'lucide-react';
 import { sounds } from '../../utils/soundEffects';
+import { downloadChainOfCustodyPDF } from '../../utils/exportForensics';
 
 interface ScanDetailModalProps {
   scan: RecentScan | null;
@@ -10,6 +11,7 @@ interface ScanDetailModalProps {
 }
 
 export const ScanDetailModal: React.FC<ScanDetailModalProps> = ({ scan, onClose }) => {
+  const [isDownloading, setIsDownloading] = useState(false);
   useEffect(() => {
     if (!scan) return;
 
@@ -39,6 +41,16 @@ export const ScanDetailModal: React.FC<ScanDetailModalProps> = ({ scan, onClose 
   const handleClose = () => {
     sounds.playBlip();
     onClose();
+  };
+
+  const handleDownloadChainOfCustody = () => {
+    if (!scan) return;
+    sounds.playComplete();
+    setIsDownloading(true);
+    downloadChainOfCustodyPDF(scan);
+    setTimeout(() => {
+      setIsDownloading(false);
+    }, 2500);
   };
 
   const modalContent = (
@@ -175,14 +187,21 @@ export const ScanDetailModal: React.FC<ScanDetailModalProps> = ({ scan, onClose 
             Close Dossier
           </button>
           <button
-            onClick={() => {
-              sounds.playBlip();
-              alert(`Full evidentiary package exported for ${scan.filename}`);
-              handleClose();
-            }}
-            className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs font-mono shadow-md shadow-blue-600/20 transition-transform hover:scale-105 active:scale-95"
+            onClick={handleDownloadChainOfCustody}
+            disabled={isDownloading}
+            className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs font-mono shadow-md shadow-blue-600/20 transition-transform hover:scale-105 active:scale-95 disabled:opacity-90 cursor-pointer"
           >
-            Download Chain of Custody
+            {isDownloading ? (
+              <>
+                <CheckCircle2 className="w-4 h-4 text-white" />
+                <span>Chain of Custody Downloaded!</span>
+              </>
+            ) : (
+              <>
+                <Download className="w-4 h-4" />
+                <span>Download Chain of Custody</span>
+              </>
+            )}
           </button>
         </div>
       </div>
