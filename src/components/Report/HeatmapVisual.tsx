@@ -91,7 +91,7 @@ export const HeatmapVisual: React.FC<HeatmapVisualProps> = ({ sample }) => {
       </div>
 
       {/* Visual Canvas Viewport (Adaptive Portrait & Landscape) */}
-      <div className={`relative w-full rounded-xl overflow-hidden bg-slate-950 border border-slate-300 flex items-center justify-center shadow-inner transition-all duration-300 ${
+      <div className={`relative w-full rounded-xl overflow-hidden bg-slate-950 border border-slate-200 dark:border-slate-800 flex items-center justify-center shadow-inner transition-all duration-300 ${
         mediaOrientation === 'portrait'
           ? 'h-[440px] sm:h-[500px]'
           : 'aspect-[4/3] sm:aspect-video max-h-[460px]'

@@ -407,7 +407,7 @@ export const MediaScanner: React.FC<MediaScannerProps> = ({
         </div>
 
         {/* High-Precision Accuracy & Consensus HUD Bar */}
-        <div className="mb-6 rounded-2xl bg-gradient-to-r from-blue-50/90 via-indigo-50/80 to-cyan-50/90 dark:from-slate-900 dark:via-slate-850 dark:to-slate-900 border border-blue-200/90 dark:border-slate-800 p-4 shadow-sm">
+        <div className="mb-6 rounded-2xl bg-gradient-to-r from-blue-50/90 via-indigo-50/80 to-cyan-50/90 dark:from-slate-900 dark:via-slate-900 dark:to-slate-950 border border-blue-200/90 dark:border-slate-800 p-4 shadow-sm">
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div className="flex items-center gap-3.5">
               <div className="w-10 h-10 rounded-xl bg-blue-600 dark:bg-cyan-600 text-white flex items-center justify-center shadow-md shadow-blue-600/20 shrink-0">
@@ -740,7 +740,7 @@ export const MediaScanner: React.FC<MediaScannerProps> = ({
                 className={`border-2 border-dashed rounded-2xl p-5 flex items-center justify-center text-center cursor-pointer transition-all ${
                   isDragging
                     ? 'border-blue-500 bg-blue-50/50 dark:bg-blue-950/40 scale-[1.01]'
-                    : 'border-slate-300 dark:border-slate-700 bg-slate-50/60 dark:bg-slate-850/60 hover:border-blue-400 dark:hover:border-cyan-500 hover:bg-blue-50/20 dark:hover:bg-slate-800/40'
+                    : 'border-slate-300 dark:border-slate-700 bg-slate-50/60 dark:bg-slate-900/60 hover:border-blue-400 dark:hover:border-cyan-500 hover:bg-blue-50/20 dark:hover:bg-slate-800/40'
                 }`}
               >
                 <input
@@ -782,7 +782,7 @@ export const MediaScanner: React.FC<MediaScannerProps> = ({
             <div className="lg:col-span-5 flex flex-col justify-between gap-5">
               
               {/* Overall Multi-Stage Progress Card */}
-              <div className="rounded-2xl p-5 bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-800 shadow-xs">
+              <div className="rounded-2xl p-5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs">
                 <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center gap-2">
                     <Activity className="w-4 h-4 text-blue-600 dark:text-cyan-400" />
@@ -796,7 +796,7 @@ export const MediaScanner: React.FC<MediaScannerProps> = ({
                 </div>
 
                 {/* Progress Bar Track */}
-                <div className="h-2.5 w-full bg-slate-200 dark:bg-slate-750 rounded-full overflow-hidden mb-3">
+                <div className="h-2.5 w-full bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden mb-3">
                   <div
                     className="h-full bg-gradient-to-r from-blue-600 via-indigo-600 to-sky-500 dark:from-cyan-500 dark:via-blue-600 dark:to-indigo-500 rounded-full transition-all duration-150"
                     style={{ width: `${scanProgress}%` }}
@@ -832,7 +832,7 @@ export const MediaScanner: React.FC<MediaScannerProps> = ({
               </div>
 
               {/* 5-Stage Step-by-Step Breakdown Cards */}
-              <div className="rounded-2xl p-5 bg-white dark:bg-slate-850 border border-slate-200 dark:border-slate-800 shadow-xs space-y-2.5">
+              <div className="rounded-2xl p-5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs space-y-2.5">
                 <div className="text-xs font-mono font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wider mb-2 flex items-center justify-between">
                   <span>How the Image Is Being Analyzed</span>
                   <span className="text-[10px] font-mono text-slate-500 dark:text-slate-400">5 MULTI-VECTOR STAGES</span>

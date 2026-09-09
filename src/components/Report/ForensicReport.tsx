@@ -147,7 +147,7 @@ export const ForensicReport: React.FC<ForensicReportProps> = ({ sample }) => {
           </div>
 
           {/* Precision & Audit Seal Banner */}
-          <div className="rounded-2xl bg-gradient-to-r from-blue-50/90 via-indigo-50/90 to-cyan-50/90 dark:from-slate-900 dark:via-slate-850 dark:to-slate-900 border border-blue-200/80 dark:border-slate-800 p-4 sm:p-5 shadow-2xs">
+          <div className="rounded-2xl bg-gradient-to-r from-blue-50/90 via-indigo-50/90 to-cyan-50/90 dark:from-slate-900 dark:via-slate-900 dark:to-slate-950 border border-blue-200/80 dark:border-slate-800 p-4 sm:p-5 shadow-2xs">
             <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
               <div className="flex items-center gap-3.5">
                 <div className="w-11 h-11 rounded-xl bg-blue-600 dark:bg-cyan-600 text-white flex items-center justify-center shadow-md shadow-blue-600/25 shrink-0">
@@ -206,7 +206,7 @@ export const ForensicReport: React.FC<ForensicReportProps> = ({ sample }) => {
             <div className="lg:col-span-6 space-y-6">
               
               {/* Metric Progress Bars */}
-              <div className="rounded-2xl bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-800 p-5 shadow-xs">
+              <div className="rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 shadow-xs">
                 <div className="text-xs font-mono font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wider mb-4 flex items-center justify-between">
                   <span>Forensic Signal Breakdown</span>
                   <span className="text-[10px] text-slate-500 dark:text-slate-400 font-medium">SCALE: 0 - 100</span>
@@ -227,7 +227,7 @@ export const ForensicReport: React.FC<ForensicReportProps> = ({ sample }) => {
                         </div>
                       </div>
 
-                      <div className="h-2 w-full bg-slate-200 dark:bg-slate-750 rounded-full overflow-hidden">
+                      <div className="h-2 w-full bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
                         <div
                           className={`h-full transition-all duration-700 rounded-full ${
                             m.pass
@@ -243,7 +243,7 @@ export const ForensicReport: React.FC<ForensicReportProps> = ({ sample }) => {
               </div>
 
               {/* Detected Anomalies List */}
-              <div className="rounded-2xl bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-800 p-5 shadow-xs">
+              <div className="rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 shadow-xs">
                 <div className="text-xs font-mono font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wider mb-3">
                   Detected Forensic Observations ({sample.detectedAnomalies.length})
                 </div>
@@ -252,7 +252,7 @@ export const ForensicReport: React.FC<ForensicReportProps> = ({ sample }) => {
                   {sample.detectedAnomalies.map((anomaly, idx) => (
                     <div
                       key={idx}
-                      className="p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs font-mono text-slate-700 dark:text-slate-300 flex items-start gap-2.5 shadow-2xs"
+                      className="p-3 rounded-xl bg-white dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 text-xs font-mono text-slate-700 dark:text-slate-300 flex items-start gap-2.5 shadow-2xs"
                     >
                       {isManipulated ? (
                         <AlertTriangle className="w-4 h-4 text-rose-600 dark:text-rose-400 shrink-0 mt-0.5" />
@@ -296,7 +296,7 @@ export const ForensicReport: React.FC<ForensicReportProps> = ({ sample }) => {
                 return (
                   <div
                     key={bench.benchmarkName}
-                    className="p-4 rounded-2xl bg-slate-50/90 dark:bg-slate-850 border border-slate-200 dark:border-slate-800 hover:border-blue-300 dark:hover:border-cyan-500/50 hover:bg-white dark:hover:bg-slate-800 hover:shadow-md transition-all shadow-xs flex flex-col justify-between"
+                    className="p-4 rounded-2xl bg-slate-50/90 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-blue-300 dark:hover:border-cyan-500/50 hover:bg-white dark:hover:bg-slate-800 hover:shadow-md transition-all shadow-xs flex flex-col justify-between"
                   >
                     <div>
                       <div className="flex items-center justify-between text-[11px] font-mono text-slate-500 dark:text-slate-400 mb-1">
@@ -317,7 +317,7 @@ export const ForensicReport: React.FC<ForensicReportProps> = ({ sample }) => {
                             <span className="font-bold text-blue-900 dark:text-cyan-300">DeepGuard AI</span>
                             <span className="font-bold text-blue-600 dark:text-cyan-400">{bench.deepguardAccuracy}%</span>
                           </div>
-                          <div className="w-full h-2 rounded-full bg-slate-200 dark:bg-slate-750 overflow-hidden">
+                          <div className="w-full h-2 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
                             <div
                               className="h-full rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-cyan-500 dark:to-blue-600"
                               style={{ width: `${bench.deepguardAccuracy}%` }}
@@ -330,7 +330,7 @@ export const ForensicReport: React.FC<ForensicReportProps> = ({ sample }) => {
                             <span>Industry Baseline</span>
                             <span>{bench.industryAverage}%</span>
                           </div>
-                          <div className="w-full h-1.5 rounded-full bg-slate-200 dark:bg-slate-750 overflow-hidden">
+                          <div className="w-full h-1.5 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
                             <div
                               className="h-full rounded-full bg-slate-400 dark:bg-slate-600"
                               style={{ width: `${bench.industryAverage}%` }}
@@ -349,7 +349,7 @@ export const ForensicReport: React.FC<ForensicReportProps> = ({ sample }) => {
               })}
 
               {/* 6th Card: Neural Ensemble Consensus Breakdown */}
-              <div className="p-4 rounded-2xl bg-blue-50/60 dark:bg-slate-850 border-2 border-blue-500/80 dark:border-cyan-500/60 shadow-xs flex flex-col justify-between">
+              <div className="p-4 rounded-2xl bg-blue-50/60 dark:bg-slate-900 border-2 border-blue-500/80 dark:border-cyan-500/60 shadow-xs flex flex-col justify-between">
                 <div>
                   <div className="flex items-center justify-between text-[11px] font-mono text-blue-800 dark:text-cyan-300 font-bold mb-1">
                     <span>MULTI-MODEL VOTING MATRIX</span>

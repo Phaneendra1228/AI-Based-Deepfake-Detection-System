@@ -120,7 +120,7 @@ export const TechSection: React.FC = () => {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-center">
             {/* Stage 1 */}
-            <div className="p-4 rounded-xl bg-white dark:bg-slate-850 border border-slate-200 dark:border-slate-750 relative shadow-2xs">
+            <div className="p-4 rounded-xl bg-white dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 relative shadow-2xs">
               <span className="text-[10px] font-mono text-blue-600 dark:text-cyan-400 font-bold block mb-1">INPUT MATRIX</span>
               <div className="text-sm font-bold text-slate-900 dark:text-white mb-1">Raw Media Frame</div>
               <p className="text-xs text-slate-600 dark:text-slate-300">RGB 1080p spatial pixel tensors</p>
@@ -128,7 +128,7 @@ export const TechSection: React.FC = () => {
             </div>
 
             {/* Stage 2 */}
-            <div className="p-4 rounded-xl bg-white dark:bg-slate-850 border border-slate-200 dark:border-slate-750 relative shadow-2xs">
+            <div className="p-4 rounded-xl bg-white dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 relative shadow-2xs">
               <span className="text-[10px] font-mono text-indigo-600 dark:text-indigo-400 font-bold block mb-1">TRANSFORM</span>
               <div className="text-sm font-bold text-slate-900 dark:text-white mb-1">Frequency DCT & FFT</div>
               <p className="text-xs text-slate-600 dark:text-slate-300">Isolate high-frequency noise residuals</p>
@@ -136,7 +136,7 @@ export const TechSection: React.FC = () => {
             </div>
 
             {/* Stage 3 */}
-            <div className="p-4 rounded-xl bg-white dark:bg-slate-850 border border-slate-200 dark:border-slate-750 relative shadow-2xs">
+            <div className="p-4 rounded-xl bg-white dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 relative shadow-2xs">
               <span className="text-[10px] font-mono text-emerald-600 dark:text-emerald-400 font-bold block mb-1">DEEP EMBEDDINGS</span>
               <div className="text-sm font-bold text-slate-900 dark:text-white mb-1">CNN Feature Extraction</div>
               <p className="text-xs text-slate-600 dark:text-slate-300">2048-dim latent manifold vectors</p>
@@ -202,7 +202,7 @@ export const TechSection: React.FC = () => {
             ].map((item) => (
               <div
                 key={item.vector}
-                className="p-4 rounded-2xl bg-white dark:bg-slate-850 border border-slate-200 dark:border-slate-750 shadow-2xs hover:border-blue-300 dark:hover:border-cyan-500/50 transition-all"
+                className="p-4 rounded-2xl bg-white dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 shadow-2xs hover:border-blue-300 dark:hover:border-cyan-500/50 transition-all"
               >
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-[10px] font-mono text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/60 px-2 py-0.5 rounded-full font-bold border border-emerald-200 dark:border-emerald-800/60">
@@ -231,7 +231,7 @@ export const TechSection: React.FC = () => {
           {stackTools.map((tool) => (
             <div
               key={tool.name}
-              className="flex items-center gap-3.5 p-4 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-blue-300 dark:hover:border-cyan-500/50 hover:bg-white dark:hover:bg-slate-850 transition-all shadow-xs"
+              className="flex items-center gap-3.5 p-4 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-blue-300 dark:hover:border-cyan-500/50 hover:bg-white dark:hover:bg-slate-800 transition-all shadow-xs"
             >
               <div className="w-10 h-10 rounded-lg bg-blue-50 dark:bg-blue-950/40 flex items-center justify-center text-blue-600 dark:text-cyan-400 border border-blue-100 dark:border-blue-800/60 shadow-2xs">
                 <Code className="w-5 h-5" />

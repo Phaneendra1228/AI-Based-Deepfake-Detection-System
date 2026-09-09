@@ -297,7 +297,7 @@ export const LiveThreatRadar: React.FC = () => {
                     className={`px-2.5 py-1 rounded-lg text-xs font-mono transition-all ${
                       selectedFilter === filter
                         ? 'bg-blue-600 dark:bg-cyan-600 text-white font-bold shadow-xs'
-                        : 'bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-750 text-slate-600 dark:text-slate-300'
+                        : 'bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300'
                     }`}
                   >
                     {filter === 'ALL' ? 'All Incidents' : filter}
@@ -420,7 +420,7 @@ export const LiveThreatRadar: React.FC = () => {
             </div>
 
             {/* Micro Explainer Card */}
-            <div className="rounded-2xl bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-slate-900 dark:to-slate-850 border border-blue-200/80 dark:border-slate-800 p-5 shadow-xs text-left">
+            <div className="rounded-2xl bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-slate-900 dark:to-slate-950 border border-blue-200/80 dark:border-slate-800 p-5 shadow-xs text-left">
               <div className="flex items-center gap-2 mb-2 text-blue-700 dark:text-cyan-400 font-semibold text-xs font-mono">
                 <Activity className="w-4 h-4 text-blue-600 dark:text-cyan-400" />
                 <span>INTELLIGENT DEFENSE PROTOCOL</span>

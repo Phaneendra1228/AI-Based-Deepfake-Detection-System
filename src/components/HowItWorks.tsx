@@ -119,7 +119,7 @@ export const HowItWorks: React.FC = () => {
                 {currentStep.description}
               </p>
 
-              <div className="p-4 rounded-xl bg-white dark:bg-slate-850 border border-slate-200 dark:border-slate-750 text-sm font-mono text-slate-700 dark:text-slate-300 flex items-start gap-3 shadow-xs">
+              <div className="p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-sm font-mono text-slate-700 dark:text-slate-300 flex items-start gap-3 shadow-xs">
                 <ChevronRight className="w-5 h-5 text-blue-600 dark:text-cyan-400 shrink-0 mt-0.5" />
                 <div>
                   <span className="text-blue-700 dark:text-cyan-400 font-bold">Technical Operation: </span>
@@ -128,7 +128,7 @@ export const HowItWorks: React.FC = () => {
               </div>
             </div>
 
-            <div className="lg:col-span-4 flex flex-col items-center justify-center p-6 rounded-xl bg-white dark:bg-slate-850 border border-slate-200 dark:border-slate-750 text-center shadow-xs">
+            <div className="lg:col-span-4 flex flex-col items-center justify-center p-6 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-center shadow-xs">
               <div className="w-16 h-16 rounded-2xl bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-800 flex items-center justify-center text-blue-600 dark:text-cyan-400 mb-4 shadow-xs">
                 <CurrentIcon className="w-8 h-8" />
               </div>
